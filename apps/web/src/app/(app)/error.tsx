@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
-import Button from "@/src/components/button";
+import { useEffect } from 'react';
+import Button from '@/src/components/button';
 
 export default function Error({
   error,
@@ -21,7 +21,7 @@ export default function Error({
           // RUNTIME_EXCEPTION
         </span>
         <h1 className="text-5xl sm:text-7xl font-bold tracking-tighter leading-none">
-          Something{" "}
+          Something{' '}
           <span className="bg-linear-to-r from-lime-cs to-(--gradient-sky) bg-clip-text text-transparent">
             crashed.
           </span>
@@ -34,7 +34,7 @@ export default function Error({
 
       <div
         className="w-full max-w-lg bg-card border border-grid-gray/40 rounded-lg shadow-card overflow-hidden animate-slide-up"
-        style={{ animationDelay: "100ms" }}
+        style={{ animationDelay: '100ms' }}
       >
         <div className="flex items-center gap-3 px-4 py-2.5 border-b border-grid-gray/40 bg-background/60">
           <div className="flex gap-1.5">
@@ -55,7 +55,7 @@ export default function Error({
           />
           <LogLine
             label="message"
-            value={error.message || "Unknown error"}
+            value={error.message || 'Unknown error'}
             valueClass="text-destructive"
           />
           {error.digest && (
@@ -77,7 +77,7 @@ export default function Error({
 
       <div
         className="flex gap-3 animate-slide-up"
-        style={{ animationDelay: "200ms" }}
+        style={{ animationDelay: '200ms' }}
       >
         <Button variant="primary" onClick={reset}>
           Retry session

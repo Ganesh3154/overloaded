@@ -1,40 +1,40 @@
-"use client";
+'use client';
 
-import { Loader } from "@/src/components/loader";
-import { PageError } from "@/src/components/page-error";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { ReadinessCard } from "@/src/components/readiness-card";
-import { StatsCard } from "@/src/components/stats-card";
-import { TasksByCategory } from "@/src/components/tasks-by-category";
-import { WeeklyCompletionChart } from "@/src/components/weekly-completion-chart";
-import { getActiveRoadmap } from "@/src/services/roadmap.service";
-import { getProfile } from "@/src/services/user.service";
+import { Loader } from '@/src/components/loader';
+import { PageError } from '@/src/components/page-error';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { ReadinessCard } from '@/src/components/readiness-card';
+import { StatsCard } from '@/src/components/stats-card';
+import { TasksByCategory } from '@/src/components/tasks-by-category';
+import { WeeklyCompletionChart } from '@/src/components/weekly-completion-chart';
+import { getActiveRoadmap } from '@/src/services/roadmap.service';
+import { getProfile } from '@/src/services/user.service';
 import {
   FireIcon,
   FlashIcon,
   Target02Icon,
   Trophy,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { useQuery } from "@tanstack/react-query";
+} from '@hugeicons/core-free-icons';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { useQuery } from '@tanstack/react-query';
 
 export default function DashboardPage() {
   const router = useRouter();
-  const [typedText, setTypedText] = useState("");
+  const [typedText, setTypedText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
 
   function handleGoToRoadmap() {
     if (isTyping) return;
     setIsTyping(true);
-    const cmd = "cd roadmap";
+    const cmd = 'cd roadmap';
     let i = 0;
     const tick = setInterval(() => {
       i++;
       setTypedText(cmd.slice(0, i));
       if (i === cmd.length) {
         clearInterval(tick);
-        setTimeout(() => router.push("/roadmap"), 400);
+        setTimeout(() => router.push('/roadmap'), 400);
       }
     }, 80);
   }
@@ -45,7 +45,7 @@ export default function DashboardPage() {
     isError: isRoadmapError,
     refetch: refetchRoadmap,
   } = useQuery({
-    queryKey: ["roadmap"],
+    queryKey: ['roadmap'],
     queryFn: getActiveRoadmap,
   });
 
@@ -55,7 +55,7 @@ export default function DashboardPage() {
     isError: isProfileError,
     refetch: refetchProfile,
   } = useQuery({
-    queryKey: ["profile"],
+    queryKey: ['profile'],
     queryFn: getProfile,
   });
 
@@ -87,7 +87,7 @@ export default function DashboardPage() {
             // NO_ACTIVE_ROADMAP
           </span>
           <h2 className="text-3xl font-bold">
-            Nothing to{" "}
+            Nothing to{' '}
             <span className="bg-linear-to-r from-lime-cs to-[var(--gradient-sky)] bg-clip-text text-transparent">
               show yet.
             </span>
@@ -100,7 +100,7 @@ export default function DashboardPage() {
 
         <div
           className="w-full max-w-sm bg-card border border-grid-gray/40 rounded-lg shadow-card overflow-hidden animate-slide-up"
-          style={{ animationDelay: "100ms" }}
+          style={{ animationDelay: '100ms' }}
         >
           <div className="flex items-center gap-3 px-4 py-2.5 border-b border-grid-gray/40 bg-background/60">
             <div className="flex gap-1.5">
@@ -139,7 +139,7 @@ export default function DashboardPage() {
               {!isTyping && (
                 <span
                   className="w-1.5 h-3.5 bg-lime-cs/70 inline-block"
-                  style={{ animation: "cursor-blink 1s step-end infinite" }}
+                  style={{ animation: 'cursor-blink 1s step-end infinite' }}
                 />
               )}
               {isTyping && typedText.length < 10 && (
@@ -149,10 +149,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div
-          className="animate-slide-up"
-          style={{ animationDelay: "200ms" }}
-        >
+        <div className="animate-slide-up" style={{ animationDelay: '200ms' }}>
           <button
             onClick={handleGoToRoadmap}
             disabled={isTyping}
@@ -177,8 +174,8 @@ export default function DashboardPage() {
     ? profile.targetCompanies
         .slice(0, 2)
         .map((c) => c.company.name)
-        .join(", ") + (profile.targetCompanies.length > 2 ? "..." : "")
-    : "your target companies";
+        .join(', ') + (profile.targetCompanies.length > 2 ? '...' : '')
+    : 'your target companies';
 
   return (
     <div className="flex-1 min-h-0 overflow-y-auto lg:overflow-hidden flex flex-col gap-3 max-w-6xl w-full px-4 sm:px-6 py-4 mx-auto">
@@ -186,7 +183,7 @@ export default function DashboardPage() {
         // Hello, {profile?.username}
       </span>
       <h2 className="text-4xl font-bold">
-        Your{" "}
+        Your{' '}
         <span className="bg-linear-to-r from-lime-cs to-[var(--gradient-sky)] bg-clip-text text-transparent">
           dashboard
         </span>
@@ -198,7 +195,11 @@ export default function DashboardPage() {
           label="XP"
           icon={
             <div className="rounded-full p-2 bg-cat-dsa/20">
-              <HugeiconsIcon icon={FlashIcon} size={16} className="text-cat-dsa" />
+              <HugeiconsIcon
+                icon={FlashIcon}
+                size={16}
+                className="text-cat-dsa"
+              />
             </div>
           }
           value={String(totalXp)}
@@ -211,7 +212,11 @@ export default function DashboardPage() {
           label="Streak"
           icon={
             <div className="rounded-full p-2 bg-cat-behavioral/20">
-              <HugeiconsIcon icon={FireIcon} size={16} className="text-cat-behavioral" />
+              <HugeiconsIcon
+                icon={FireIcon}
+                size={16}
+                className="text-cat-behavioral"
+              />
             </div>
           }
           value="0d"
@@ -223,7 +228,11 @@ export default function DashboardPage() {
           label="Readiness"
           icon={
             <div className="rounded-full p-2 bg-cat-system-design/20">
-              <HugeiconsIcon icon={Target02Icon} size={16} className="text-cat-system-design" />
+              <HugeiconsIcon
+                icon={Target02Icon}
+                size={16}
+                className="text-cat-system-design"
+              />
             </div>
           }
           value={`${stats.readiness}%`}
@@ -235,7 +244,11 @@ export default function DashboardPage() {
           label="Roadmap Progress"
           icon={
             <div className="rounded-full p-2 bg-cat-new-skill/20">
-              <HugeiconsIcon icon={Trophy} size={16} className="text-cat-new-skill" />
+              <HugeiconsIcon
+                icon={Trophy}
+                size={16}
+                className="text-cat-new-skill"
+              />
             </div>
           }
           value={`${stats.completion}%`}

@@ -1,4 +1,4 @@
-import Button from "./button";
+import Button from './button';
 
 interface Props {
   message?: string;
@@ -6,7 +6,7 @@ interface Props {
 }
 
 export function PageError({
-  message = "The request failed. Check your connection and try again.",
+  message = 'The request failed. Check your connection and try again.',
   onRetry,
 }: Props) {
   return (
@@ -16,7 +16,7 @@ export function PageError({
           // API_ERROR
         </span>
         <h2 className="text-3xl font-bold">
-          Failed to{" "}
+          Failed to{' '}
           <span className="bg-linear-to-r from-lime-cs to-[var(--gradient-sky)] bg-clip-text text-transparent">
             load.
           </span>
@@ -26,7 +26,7 @@ export function PageError({
 
       <div
         className="w-full max-w-sm bg-card border border-grid-gray/40 rounded-lg shadow-card overflow-hidden animate-slide-up"
-        style={{ animationDelay: "100ms" }}
+        style={{ animationDelay: '100ms' }}
       >
         <div className="flex items-center gap-3 px-4 py-2.5 border-b border-grid-gray/40 bg-background/60">
           <div className="flex gap-1.5">
@@ -54,7 +54,7 @@ export function PageError({
       </div>
 
       {onRetry && (
-        <div className="animate-slide-up" style={{ animationDelay: "200ms" }}>
+        <div className="animate-slide-up" style={{ animationDelay: '200ms' }}>
           <Button variant="primary" onClick={onRetry}>
             Retry
           </Button>

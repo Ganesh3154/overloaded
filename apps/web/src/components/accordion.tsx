@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 import {
   CheckmarkCircle02Icon,
   Cancel01Icon,
   Lightning,
   Clock01Icon,
   ArrowDown01Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import ProgressBar from "./progress-bar";
+} from '@hugeicons/core-free-icons';
+import { HugeiconsIcon } from '@hugeicons/react';
+import ProgressBar from './progress-bar';
 import {
   tagStyles,
   type RoadmapWeek,
   type StatusFilter,
   type TagVariant,
-} from "../types/roadmap";
+} from '../types/roadmap';
 
 interface AccordionProps {
   week: RoadmapWeek;
@@ -41,9 +41,9 @@ export default function Accordion({
 
   const visibleTasks = tasks.filter((t) => {
     const matchesStatus =
-      statusFilter === "ALL" ||
-      (statusFilter === "DONE" && t.done) ||
-      (statusFilter === "TODO" && !t.done);
+      statusFilter === 'ALL' ||
+      (statusFilter === 'DONE' && t.done) ||
+      (statusFilter === 'TODO' && !t.done);
     const matchesTag = selectedTags.size === 0 || selectedTags.has(t.tag);
     return matchesStatus && matchesTag;
   });
@@ -60,7 +60,6 @@ export default function Accordion({
 
       {/* Card */}
       <div className="w-full rounded-2xl bg-card shadow-card border border-grid-gray/40 overflow-hidden transition-colors duration-200 hover:border-grid-gray/60">
-
         {/* Accordion header */}
         <button
           onClick={() => setOpen((v) => !v)}
@@ -69,7 +68,9 @@ export default function Accordion({
           <div className="flex-1 flex flex-col gap-3">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <h2 className="text-base font-bold tracking-tight">{week.title}</h2>
+                <h2 className="text-base font-bold tracking-tight">
+                  {week.title}
+                </h2>
                 <div className="flex items-center gap-2 mt-0.5">
                   <span className="text-dim text-[11px] font-semibold font-mono tracking-widest uppercase">
                     Week {week.weekNumber}
@@ -83,13 +84,19 @@ export default function Accordion({
 
               <div className="flex items-center gap-2 shrink-0">
                 <div className="flex items-center gap-1.5">
-                  <span className="text-lime-cs text-[11px] font-bold font-mono">{percent}%</span>
+                  <span className="text-lime-cs text-[11px] font-bold font-mono">
+                    {percent}%
+                  </span>
                   <div className="w-16">
                     <ProgressBar value={percent} />
                   </div>
                 </div>
                 <div className="flex items-center gap-1 bg-lime-cs/10 border border-lime-cs/20 rounded-lg px-2.5 py-1">
-                  <HugeiconsIcon icon={Lightning} size={13} color="var(--lime-cs)" />
+                  <HugeiconsIcon
+                    icon={Lightning}
+                    size={13}
+                    color="var(--lime-cs)"
+                  />
                   <span className="text-lime-cs text-[11px] font-bold font-mono">
                     {earnedXP} XP
                   </span>
@@ -100,17 +107,21 @@ export default function Accordion({
 
           <div
             className={`text-dim transition-transform duration-300 shrink-0 ${
-              open ? "rotate-180" : "rotate-0"
+              open ? 'rotate-180' : 'rotate-0'
             }`}
           >
-            <HugeiconsIcon icon={ArrowDown01Icon} size={18} color="currentColor" />
+            <HugeiconsIcon
+              icon={ArrowDown01Icon}
+              size={18}
+              color="currentColor"
+            />
           </div>
         </button>
 
         {/* Collapsible body */}
         <div
           className={`grid transition-all duration-300 ease-in-out ${
-            open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+            open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
           }`}
         >
           <div className="overflow-hidden">
@@ -131,15 +142,17 @@ export default function Accordion({
                       <HugeiconsIcon
                         icon={task.done ? CheckmarkCircle02Icon : Cancel01Icon}
                         size={22}
-                        color={task.done ? "var(--lime-cs)" : "var(--grid-gray)"}
+                        color={
+                          task.done ? 'var(--lime-cs)' : 'var(--grid-gray)'
+                        }
                       />
                     </div>
                     <div className="flex-1 min-w-0">
                       <span
                         className={`block text-sm font-medium leading-snug transition-colors duration-200 ${
                           task.done
-                            ? "line-through text-dim"
-                            : "text-foreground/80 group-hover:text-foreground"
+                            ? 'line-through text-dim'
+                            : 'text-foreground/80 group-hover:text-foreground'
                         }`}
                       >
                         {task.title}
@@ -163,8 +176,8 @@ export default function Accordion({
                     <span
                       className={`shrink-0 text-sm font-bold font-mono transition-colors duration-200 ${
                         task.done
-                          ? "text-lime-cs"
-                          : "text-lime-cs/20 group-hover:text-lime-cs/50"
+                          ? 'text-lime-cs'
+                          : 'text-lime-cs/20 group-hover:text-lime-cs/50'
                       }`}
                     >
                       +{task.xp} XP

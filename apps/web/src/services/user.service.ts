@@ -1,4 +1,4 @@
-import { apiClient } from "../helper/api-client";
+import { apiClient } from '../helper/api-client';
 
 export interface UserProfile {
   id: number;
@@ -26,5 +26,5 @@ export interface UserProfile {
 }
 
 export async function getProfile(): Promise<UserProfile> {
-  return apiClient.get<UserProfile>("/user/profile");
+  return apiClient.get<UserProfile>('/user/profile');
 }

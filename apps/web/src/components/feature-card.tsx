@@ -1,4 +1,4 @@
-import { HugeiconsIcon, IconSvgElement } from "@hugeicons/react";
+import { HugeiconsIcon, IconSvgElement } from '@hugeicons/react';
 
 interface Feature {
   icon: IconSvgElement;
@@ -24,7 +24,9 @@ export default function FeatureCard({ features }: { features: Feature[] }) {
             />
           </div>
           <div>
-            <p className="text-foreground text-sm font-medium">{feature.title}</p>
+            <p className="text-foreground text-sm font-medium">
+              {feature.title}
+            </p>
             <p className="text-dim text-xs mt-0.5">{feature.description}</p>
           </div>
         </div>

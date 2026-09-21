@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import OverloadedIcon from "./overloaded-icon";
-import { SettingsPanel } from "./settings-panel";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { Settings01Icon } from "@hugeicons/core-free-icons";
-import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import Link from 'next/link';
+import OverloadedIcon from './overloaded-icon';
+import { SettingsPanel } from './settings-panel';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { Settings01Icon } from '@hugeicons/core-free-icons';
+import { usePathname } from 'next/navigation';
+import { useState, useEffect } from 'react';
 
 const NAV_LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/dashboard", label: "Dashboard" },
-  { href: "/roadmap", label: "Roadmap" },
-  { href: "/profile", label: "Profile" },
+  { href: '/', label: 'Home' },
+  { href: '/dashboard', label: 'Dashboard' },
+  { href: '/roadmap', label: 'Roadmap' },
+  { href: '/profile', label: 'Profile' },
 ];
 
 export default function Header() {
@@ -21,7 +21,7 @@ export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    setIsLoggedIn(!!localStorage.getItem("access_token"));
+    setIsLoggedIn(!!localStorage.getItem('access_token'));
     console.log(isLoggedIn);
   }, [pathname]);
 
@@ -41,7 +41,7 @@ export default function Header() {
                   key={href}
                   href={href}
                   className={`relative px-4 py-2 text-xs font-mono font-medium tracking-widest transition-colors duration-200 ${
-                    isActive ? "text-lime-cs" : "text-dim hover:text-foreground"
+                    isActive ? 'text-lime-cs' : 'text-dim hover:text-foreground'
                   }`}
                 >
                   {label.toUpperCase()}

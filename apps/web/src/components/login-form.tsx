@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useForm } from "react-hook-form";
-import Input from "./input";
+import { useForm } from 'react-hook-form';
+import Input from './input';
 import {
   ArrowRight01Icon,
   Loading01Icon,
@@ -9,34 +9,34 @@ import {
   Mail01Icon,
   ViewIcon,
   ViewOffSlashIcon,
-} from "@hugeicons/core-free-icons";
-import Link from "next/link";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { useState } from "react";
-import Button from "./button";
-import { LoginFormData, LoginFormInput } from "../types/form";
-import z from "zod";
-import { validate } from "../validator/resolver";
+} from '@hugeicons/core-free-icons';
+import Link from 'next/link';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { useState } from 'react';
+import Button from './button';
+import { LoginFormData, LoginFormInput } from '../types/form';
+import z from 'zod';
+import { validate } from '../validator/resolver';
 
 const loginSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
+  email: z.string().email('Invalid email address'),
+  password: z.string().min(8, 'Password must be at least 8 characters'),
 });
 
 const INPUTS: LoginFormInput[] = [
   {
-    label: "Email",
-    field: "email",
-    type: "email",
-    autoComplete: "email",
-    placeholder: "you@example.com",
+    label: 'Email',
+    field: 'email',
+    type: 'email',
+    autoComplete: 'email',
+    placeholder: 'you@example.com',
     icon: Mail01Icon,
   },
   {
-    label: "Password",
-    field: "password",
-    autoComplete: "new-password",
-    placeholder: "",
+    label: 'Password',
+    field: 'password',
+    autoComplete: 'new-password',
+    placeholder: '',
     icon: LockPasswordIcon,
   },
 ];
@@ -64,7 +64,7 @@ export default function LoginForm({ onSubmit, isPending }: Props) {
                 <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
                   {input.label}
                 </label>
-                {input.field === "password" && (
+                {input.field === 'password' && (
                   <button className="font-semibold text-xs text-lime-cs hover:opacity-80 transition-opacity">
                     Forgot password?
                   </button>
@@ -73,9 +73,15 @@ export default function LoginForm({ onSubmit, isPending }: Props) {
               <Input
                 {...form.register(input.field)}
                 {...input}
-                type={input.field === "password" ? (showPassword ? "text" : "password") : input.type}
+                type={
+                  input.field === 'password'
+                    ? showPassword
+                      ? 'text'
+                      : 'password'
+                    : input.type
+                }
                 rightElement={
-                  input.field === "password" ? (
+                  input.field === 'password' ? (
                     <button
                       type="button"
                       onClick={() => setShowPassword((v) => !v)}
@@ -101,20 +107,34 @@ export default function LoginForm({ onSubmit, isPending }: Props) {
           <Button type="submit" variant="primary" disabled={isPending}>
             {isPending ? (
               <>
-                <HugeiconsIcon icon={Loading01Icon} size={15} color="var(--logo-text)" strokeWidth={2} className="animate-spin" />
+                <HugeiconsIcon
+                  icon={Loading01Icon}
+                  size={15}
+                  color="var(--logo-text)"
+                  strokeWidth={2}
+                  className="animate-spin"
+                />
                 Signing in…
               </>
             ) : (
               <>
                 Sign in
-                <HugeiconsIcon icon={ArrowRight01Icon} size={15} color="var(--logo-text)" strokeWidth={2} />
+                <HugeiconsIcon
+                  icon={ArrowRight01Icon}
+                  size={15}
+                  color="var(--logo-text)"
+                  strokeWidth={2}
+                />
               </>
             )}
           </Button>
         </div>
         <p className="text-center text-sm text-muted-foreground text-dim">
-          Don&apos;t have an account?{" "}
-          <Link href="/signup" className="font-semibold text-lime-cs hover:opacity-80 transition-opacity">
+          Don&apos;t have an account?{' '}
+          <Link
+            href="/signup"
+            className="font-semibold text-lime-cs hover:opacity-80 transition-opacity"
+          >
             Sign up
           </Link>
         </p>

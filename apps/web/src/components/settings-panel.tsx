@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { useTheme } from "@/src/app/theme-provider";
+import { useTheme } from '@/src/app/theme-provider';
 import {
   Moon01Icon,
   PanelRightClose,
   Sun01Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+} from '@hugeicons/core-free-icons';
+import { HugeiconsIcon } from '@hugeicons/react';
 
 interface SettingsPanelProps {
   open: boolean;
@@ -22,8 +22,8 @@ export function SettingsPanel({ open, onClose }: SettingsPanelProps) {
       <div
         className={`fixed inset-0 z-50 bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${
           open
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
+            ? 'opacity-100 pointer-events-auto'
+            : 'opacity-0 pointer-events-none'
         }`}
         onClick={onClose}
         aria-hidden="true"
@@ -32,7 +32,7 @@ export function SettingsPanel({ open, onClose }: SettingsPanelProps) {
       {/* Panel */}
       <div
         className={`fixed top-0 right-0 z-50 h-full w-72 bg-card border-l border-border/60 shadow-2xl flex flex-col transition-transform duration-300 ease-out ${
-          open ? "translate-x-0" : "translate-x-full"
+          open ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         {/* Header */}
@@ -47,7 +47,11 @@ export function SettingsPanel({ open, onClose }: SettingsPanelProps) {
             onClick={onClose}
             className="p-1.5 rounded-md text-dim hover:text-foreground hover:bg-background transition-colors duration-150"
           >
-            <HugeiconsIcon icon={PanelRightClose} size={16} color="currentColor" />
+            <HugeiconsIcon
+              icon={PanelRightClose}
+              size={16}
+              color="currentColor"
+            />
           </button>
         </div>
 
@@ -60,25 +64,33 @@ export function SettingsPanel({ open, onClose }: SettingsPanelProps) {
             </span>
             <div className="grid grid-cols-2 gap-2">
               <button
-                onClick={() => setTheme("light")}
+                onClick={() => setTheme('light')}
                 className={`flex flex-col items-center gap-2 p-3 rounded-lg border text-xs font-medium transition-all duration-150 ${
-                  theme === "light"
-                    ? "border-lime-cs/50 bg-lime-cs/10 text-lime-cs"
-                    : "border-border/40 text-dim hover:border-border hover:text-foreground"
+                  theme === 'light'
+                    ? 'border-lime-cs/50 bg-lime-cs/10 text-lime-cs'
+                    : 'border-border/40 text-dim hover:border-border hover:text-foreground'
                 }`}
               >
-                <HugeiconsIcon icon={Sun01Icon} size={16} color="currentColor" />
+                <HugeiconsIcon
+                  icon={Sun01Icon}
+                  size={16}
+                  color="currentColor"
+                />
                 <span>Light</span>
               </button>
               <button
-                onClick={() => setTheme("dark")}
+                onClick={() => setTheme('dark')}
                 className={`flex flex-col items-center gap-2 p-3 rounded-lg border text-xs font-medium transition-all duration-150 ${
-                  theme === "dark"
-                    ? "border-lime-cs/50 bg-lime-cs/10 text-lime-cs"
-                    : "border-border/40 text-dim hover:border-border hover:text-foreground"
+                  theme === 'dark'
+                    ? 'border-lime-cs/50 bg-lime-cs/10 text-lime-cs'
+                    : 'border-border/40 text-dim hover:border-border hover:text-foreground'
                 }`}
               >
-                <HugeiconsIcon icon={Moon01Icon} size={16} color="currentColor" />
+                <HugeiconsIcon
+                  icon={Moon01Icon}
+                  size={16}
+                  color="currentColor"
+                />
                 <span>Dark</span>
               </button>
             </div>

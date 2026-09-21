@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { RoadmapWeek } from "@/src/types/roadmap";
+import { RoadmapWeek } from '@/src/types/roadmap';
 import {
   Bar,
   BarChart,
@@ -9,7 +9,7 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from "recharts";
+} from 'recharts';
 
 interface Props {
   weeks: RoadmapWeek[];
@@ -25,7 +25,7 @@ export function WeeklyCompletionChart({ weeks }: Props) {
   return (
     <div
       className="flex-[2] min-h-0 bg-card border rounded-lg p-4 border-grid-gray/40 shadow-card transition-colors duration-200 flex flex-col h-72 lg:h-auto animate-slide-up"
-      style={{ animationDelay: "150ms" }}
+      style={{ animationDelay: '150ms' }}
     >
       <div className="flex justify-between items-center mb-4 shrink-0">
         <span className="text-sm font-medium">Weekly completion</span>
@@ -67,28 +67,28 @@ export function WeeklyCompletionChart({ weeks }: Props) {
               axisLine={false}
               tickLine={false}
               tick={{
-                fill: "var(--text-dim)",
+                fill: 'var(--text-dim)',
                 fontSize: 11,
-                fontFamily: "var(--font-mono)",
+                fontFamily: 'var(--font-mono)',
               }}
             />
             <YAxis
               axisLine={false}
               tickLine={false}
-              tick={{ fill: "var(--text-dim)", fontSize: 11 }}
+              tick={{ fill: 'var(--text-dim)', fontSize: 11 }}
               allowDecimals={false}
               width={24}
             />
             <Tooltip
-              cursor={{ fill: "var(--chart-cursor)" }}
+              cursor={{ fill: 'var(--chart-cursor)' }}
               contentStyle={{
-                background: "var(--card)",
-                border: "1px solid var(--border)",
+                background: 'var(--card)',
+                border: '1px solid var(--border)',
                 borderRadius: 8,
                 fontSize: 12,
-                fontFamily: "var(--font-mono)",
+                fontFamily: 'var(--font-mono)',
               }}
-              labelStyle={{ color: "var(--text-dim)" }}
+              labelStyle={{ color: 'var(--text-dim)' }}
             />
             <Bar
               dataKey="done"

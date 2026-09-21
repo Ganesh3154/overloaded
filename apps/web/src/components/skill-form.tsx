@@ -1,25 +1,25 @@
-import Chip from "./chip";
-import Stepper from "./stepper";
-import { useFormContext } from "react-hook-form";
-import type { OnboardingFormData } from "../validator/onboarding";
-import { LEVELS } from "../types/level";
+import Chip from './chip';
+import Stepper from './stepper';
+import { useFormContext } from 'react-hook-form';
+import type { OnboardingFormData } from '../validator/onboarding';
+import { LEVELS } from '../types/level';
 
 const TECHSTACK = [
-  "JavaScript",
-  "TypeScript",
-  "React",
-  "Node.js",
-  "Python",
-  "Java",
-  "Go",
-  "Rust",
-  "SQL",
-  "PostgreSQL",
-  "MongoDB",
-  "Docker",
-  "Kubernetes",
-  "AWS",
-  "GCP",
+  'JavaScript',
+  'TypeScript',
+  'React',
+  'Node.js',
+  'Python',
+  'Java',
+  'Go',
+  'Rust',
+  'SQL',
+  'PostgreSQL',
+  'MongoDB',
+  'Docker',
+  'Kubernetes',
+  'AWS',
+  'GCP',
 ];
 
 function LevelSelector({
@@ -64,16 +64,16 @@ export default function SkillForm() {
     formState: { errors },
   } = useFormContext<OnboardingFormData>();
 
-  const techStack = watch("techStack");
-  const dsaLevel = watch("dsaLevel");
-  const systemDesignLevel = watch("systemDesignLevel");
-  const behavioralConfidence = watch("behavioralConfidence");
+  const techStack = watch('techStack');
+  const dsaLevel = watch('dsaLevel');
+  const systemDesignLevel = watch('systemDesignLevel');
+  const behavioralConfidence = watch('behavioralConfidence');
 
   const toggleChip = (chip: string) => {
     const updated = techStack.includes(chip)
       ? techStack.filter((c) => c !== chip)
       : [...techStack, chip];
-    setValue("techStack", updated, { shouldValidate: true });
+    setValue('techStack', updated, { shouldValidate: true });
   };
 
   return (
@@ -102,17 +102,17 @@ export default function SkillForm() {
       <LevelSelector
         label="DSA / Coding level"
         value={dsaLevel}
-        onChange={(v) => setValue("dsaLevel", v)}
+        onChange={(v) => setValue('dsaLevel', v)}
       />
       <LevelSelector
         label="System Design level"
         value={systemDesignLevel}
-        onChange={(v) => setValue("systemDesignLevel", v)}
+        onChange={(v) => setValue('systemDesignLevel', v)}
       />
       <LevelSelector
         label="Behavioral Confidence"
         value={behavioralConfidence}
-        onChange={(v) => setValue("behavioralConfidence", v)}
+        onChange={(v) => setValue('behavioralConfidence', v)}
       />
     </div>
   );

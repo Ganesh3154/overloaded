@@ -1,10 +1,15 @@
-import Chip from "./chip";
-import Input from "./input";
-import Slider from "./slider";
-import { useFormContext } from "react-hook-form";
-import type { OnboardingFormData } from "../validator/onboarding";
+import Chip from './chip';
+import Input from './input';
+import Slider from './slider';
+import { useFormContext } from 'react-hook-form';
+import type { OnboardingFormData } from '../validator/onboarding';
 
-const LEARNING_STYLES = ["Video", "Reading", "Practice-heavy", "Mock interviews"];
+const LEARNING_STYLES = [
+  'Video',
+  'Reading',
+  'Practice-heavy',
+  'Mock interviews',
+];
 
 export default function IdentifyForm() {
   const {
@@ -14,14 +19,14 @@ export default function IdentifyForm() {
     formState: { errors },
   } = useFormContext<OnboardingFormData>();
 
-  const learningStyle = watch("learningStyle");
-  const yearsOfExperience = watch("yearsOfExperience");
+  const learningStyle = watch('learningStyle');
+  const yearsOfExperience = watch('yearsOfExperience');
 
   const toggleLearningStyle = (style: string) => {
     const updated = learningStyle.includes(style)
       ? learningStyle.filter((s) => s !== style)
       : [...learningStyle, style];
-    setValue("learningStyle", updated, { shouldValidate: true });
+    setValue('learningStyle', updated, { shouldValidate: true });
   };
 
   return (
@@ -30,7 +35,7 @@ export default function IdentifyForm() {
         <label className="text-dim text-xs font-mono font-semibold uppercase tracking-wide">
           Username
         </label>
-        <Input {...register("username")} placeholder="your_handle" />
+        <Input {...register('username')} placeholder="your_handle" />
         {errors.username && (
           <p className="text-xs text-destructive">{errors.username.message}</p>
         )}
@@ -41,9 +46,7 @@ export default function IdentifyForm() {
         min={0}
         max={20}
         value={yearsOfExperience}
-        onChange={(e) =>
-          setValue("yearsOfExperience", Number(e.target.value))
-        }
+        onChange={(e) => setValue('yearsOfExperience', Number(e.target.value))}
       />
 
       <div className="flex flex-col gap-2">
@@ -61,7 +64,9 @@ export default function IdentifyForm() {
           ))}
         </div>
         {errors.learningStyle && (
-          <p className="text-xs text-destructive">{errors.learningStyle.message}</p>
+          <p className="text-xs text-destructive">
+            {errors.learningStyle.message}
+          </p>
         )}
       </div>
     </div>

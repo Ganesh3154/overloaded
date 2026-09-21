@@ -1,5 +1,5 @@
-import { Trophy } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { Trophy } from '@hugeicons/core-free-icons';
+import { HugeiconsIcon } from '@hugeicons/react';
 
 export default function Card({ title }: { title: string }) {
   return (

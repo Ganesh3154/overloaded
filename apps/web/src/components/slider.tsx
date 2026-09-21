@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from "react";
+import { InputHTMLAttributes } from 'react';
 
 interface SliderProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -7,7 +7,13 @@ interface SliderProps extends InputHTMLAttributes<HTMLInputElement> {
   max?: number;
 }
 
-export default function Slider({ label, value, min = 0, max = 100, ...props }: SliderProps) {
+export default function Slider({
+  label,
+  value,
+  min = 0,
+  max = 100,
+  ...props
+}: SliderProps) {
   const pct = max > min ? ((Number(value) - min) / (max - min)) * 100 : 0;
 
   return (

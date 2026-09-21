@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { Cell, Pie, PieChart } from "recharts";
+import { Cell, Pie, PieChart } from 'recharts';
 
 interface Props {
   readiness: number;
@@ -22,7 +22,7 @@ export function ReadinessCard({ readiness }: Props) {
   return (
     <div
       className="sm:flex-1 bg-card border rounded-lg p-4 border-grid-gray/40 shadow-card transition-colors duration-200 flex flex-col animate-slide-up"
-      style={{ animationDelay: "200ms" }}
+      style={{ animationDelay: '200ms' }}
     >
       <span className="text-sm font-medium">Readiness</span>
       <div className="flex-1 flex items-center justify-center">
@@ -32,7 +32,7 @@ export function ReadinessCard({ readiness }: Props) {
             className="absolute inset-0 rounded-full blur-2xl opacity-15 pointer-events-none"
             style={{
               background:
-                "radial-gradient(circle, var(--lime-cs) 0%, transparent 70%)",
+                'radial-gradient(circle, var(--lime-cs) 0%, transparent 70%)',
             }}
           />
           <PieChart width={200} height={200}>

@@ -1,16 +1,22 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { Home01Icon, Trophy, DashboardBrowsingIcon, User02Icon, Login01Icon } from "@hugeicons/core-free-icons";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import Link from 'next/link';
+import { HugeiconsIcon } from '@hugeicons/react';
+import {
+  Home01Icon,
+  Trophy,
+  DashboardBrowsingIcon,
+  User02Icon,
+  Login01Icon,
+} from '@hugeicons/core-free-icons';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const NAV_LINKS = [
-  { href: "/", label: "Home", icon: Home01Icon },
-  { href: "/dashboard", label: "Dashboard", icon: DashboardBrowsingIcon },
-  { href: "/roadmap", label: "Roadmap", icon: Trophy },
-  { href: "/profile", label: "Profile", icon: User02Icon },
+  { href: '/', label: 'Home', icon: Home01Icon },
+  { href: '/dashboard', label: 'Dashboard', icon: DashboardBrowsingIcon },
+  { href: '/roadmap', label: 'Roadmap', icon: Trophy },
+  { href: '/profile', label: 'Profile', icon: User02Icon },
 ];
 
 export default function MobileNav() {
@@ -18,7 +24,7 @@ export default function MobileNav() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    setIsLoggedIn(!!localStorage.getItem("access_token"));
+    setIsLoggedIn(!!localStorage.getItem('access_token'));
   }, [pathname]);
 
   return (
@@ -30,7 +36,9 @@ export default function MobileNav() {
             className="flex flex-col items-center gap-1 flex-1 py-2 text-lime-cs transition-colors duration-200"
           >
             <HugeiconsIcon icon={Login01Icon} size={20} color="currentColor" />
-            <span className="text-[10px] font-mono font-medium tracking-wide uppercase">Login</span>
+            <span className="text-[10px] font-mono font-medium tracking-wide uppercase">
+              Login
+            </span>
           </Link>
         )}
         {NAV_LINKS.map(({ href, label, icon }) => {
@@ -40,7 +48,7 @@ export default function MobileNav() {
               key={href}
               href={href}
               className={`flex flex-col items-center gap-1 flex-1 py-2 transition-colors duration-200 ${
-                isActive ? "text-lime-cs" : "text-dim"
+                isActive ? 'text-lime-cs' : 'text-dim'
               }`}
             >
               <HugeiconsIcon icon={icon} size={20} color="currentColor" />

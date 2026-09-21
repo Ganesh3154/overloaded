@@ -1,6 +1,6 @@
-import Slider from "./slider";
-import { useFormContext } from "react-hook-form";
-import type { OnboardingFormData } from "../validator/onboarding";
+import Slider from './slider';
+import { useFormContext } from 'react-hook-form';
+import type { OnboardingFormData } from '../validator/onboarding';
 
 export default function PlanForm() {
   const {
@@ -9,8 +9,8 @@ export default function PlanForm() {
     formState: { errors },
   } = useFormContext<OnboardingFormData>();
 
-  const prepTime = watch("prepTime");
-  const hrsPerDay = watch("hrsPerDay");
+  const prepTime = watch('prepTime');
+  const hrsPerDay = watch('hrsPerDay');
 
   return (
     <div className="flex flex-col gap-6 bg-card rounded-lg border border-grid-gray/40 p-6">
@@ -21,11 +21,15 @@ export default function PlanForm() {
           max={48}
           value={prepTime}
           onChange={(e) =>
-            setValue("prepTime", Number(e.target.value), { shouldValidate: true })
+            setValue('prepTime', Number(e.target.value), {
+              shouldValidate: true,
+            })
           }
         />
         {errors.prepTime && (
-          <p className="text-xs text-destructive mt-1">{errors.prepTime.message}</p>
+          <p className="text-xs text-destructive mt-1">
+            {errors.prepTime.message}
+          </p>
         )}
       </div>
 
@@ -36,11 +40,15 @@ export default function PlanForm() {
           max={24}
           value={hrsPerDay}
           onChange={(e) =>
-            setValue("hrsPerDay", Number(e.target.value), { shouldValidate: true })
+            setValue('hrsPerDay', Number(e.target.value), {
+              shouldValidate: true,
+            })
           }
         />
         {errors.hrsPerDay && (
-          <p className="text-xs text-destructive mt-1">{errors.hrsPerDay.message}</p>
+          <p className="text-xs text-destructive mt-1">
+            {errors.hrsPerDay.message}
+          </p>
         )}
       </div>
     </div>

@@ -1,7 +1,7 @@
-import Header from "@/src/components/header";
-import MobileNav from "@/src/components/mobile-nav";
-import { FetchingIndicator } from "@/src/components/fetching-indicator";
-import { HomeBackground } from "@/src/components/home-background";
+import Header from '@/src/components/header';
+import MobileNav from '@/src/components/mobile-nav';
+import { FetchingIndicator } from '@/src/components/fetching-indicator';
+import { HomeBackground } from '@/src/components/home-background';
 
 export default function DashboardLayout({
   children,

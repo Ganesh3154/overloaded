@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useIsFetching } from "@tanstack/react-query";
+import { useIsFetching } from '@tanstack/react-query';
 
 /**
  * Renders a thin scanning bar just below the header whenever any React Query
@@ -12,7 +12,7 @@ export function FetchingIndicator() {
   return (
     <div
       className={`fixed top-16 left-0 right-0 z-50 h-0.5 overflow-hidden transition-opacity duration-500 ${
-        count > 0 ? "opacity-100" : "opacity-0"
+        count > 0 ? 'opacity-100' : 'opacity-0'
       }`}
       aria-hidden="true"
     >

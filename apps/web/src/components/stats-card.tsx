@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import ProgressBar from "./progress-bar";
+import { ReactNode } from 'react';
+import ProgressBar from './progress-bar';
 
 interface Props {
   label: string;

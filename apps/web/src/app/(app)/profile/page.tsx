@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { Loader } from "@/src/components/loader";
-import { PageError } from "@/src/components/page-error";
-import { getActiveRoadmap } from "@/src/services/roadmap.service";
-import { getProfile } from "@/src/services/user.service";
-import { LEVELS } from "@/src/types/level";
+import { Loader } from '@/src/components/loader';
+import { PageError } from '@/src/components/page-error';
+import { getActiveRoadmap } from '@/src/services/roadmap.service';
+import { getProfile } from '@/src/services/user.service';
+import { LEVELS } from '@/src/types/level';
 import {
   Award01Icon,
   BarChartIcon,
@@ -13,23 +13,23 @@ import {
   Layers01Icon,
   PencilEdit01Icon,
   User02Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { useQuery } from "@tanstack/react-query";
-import Link from "next/link";
-import { ReactNode } from "react";
+} from '@hugeicons/core-free-icons';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
+import { ReactNode } from 'react';
 
 function levelLabel(level: number): string {
   if (level <= 1) return LEVELS[level].title;
   if (level <= 2) return LEVELS[level].title;
   if (level <= 3) return LEVELS[level].title;
   if (level <= 4) return LEVELS[level].title;
-  return "Expert";
+  return 'Expert';
 }
 
 function Card({
   children,
-  className = "",
+  className = '',
 }: {
   children: ReactNode;
   className?: string;
@@ -78,12 +78,12 @@ export default function ProfilePage() {
     isError,
     refetch,
   } = useQuery({
-    queryKey: ["profile"],
+    queryKey: ['profile'],
     queryFn: getProfile,
   });
 
   const { data: roadmap } = useQuery({
-    queryKey: ["roadmap"],
+    queryKey: ['roadmap'],
     queryFn: getActiveRoadmap,
   });
 
@@ -112,11 +112,11 @@ export default function ProfilePage() {
   const totalTasks = roadmap?.stats.totalTasks ?? 0;
 
   const badges = [
-    tasksCompleted >= 1 && "First Step",
-    tasksCompleted >= 10 && "Grinder",
-    totalXp >= 100 && "Century Club",
-    totalXp >= 1000 && "XP Master",
-    tasksCompleted > 0 && tasksCompleted === totalTasks && "Completionist",
+    tasksCompleted >= 1 && 'First Step',
+    tasksCompleted >= 10 && 'Grinder',
+    totalXp >= 100 && 'Century Club',
+    totalXp >= 1000 && 'XP Master',
+    tasksCompleted > 0 && tasksCompleted === totalTasks && 'Completionist',
   ].filter(Boolean) as string[];
 
   return (
@@ -124,7 +124,7 @@ export default function ProfilePage() {
       {/* Header */}
       <div
         className="flex items-start gap-4 animate-slide-up"
-        style={{ animationDelay: "60ms" }}
+        style={{ animationDelay: '60ms' }}
       >
         <div className="shrink-0 flex items-center justify-center w-20 h-20 rounded-xl border-2 border-lime-cs/40 bg-lime-cs/10">
           <HugeiconsIcon icon={User02Icon} size={34} className="text-lime-cs" />
@@ -137,8 +137,8 @@ export default function ProfilePage() {
             {profile.fullName || profile.username}
           </h2>
           <p className="text-sm text-dim">
-            {profile.yearsOfExperience} yrs experience ·{" "}
-            {profile.learningStyle.join(", ")} learner
+            {profile.yearsOfExperience} yrs experience ·{' '}
+            {profile.learningStyle.join(', ')} learner
           </p>
         </div>
         <Link
@@ -153,7 +153,7 @@ export default function ProfilePage() {
       {/* Tech stack + Target companies */}
       <div
         className="grid grid-cols-1 sm:grid-cols-2 gap-3 animate-slide-up"
-        style={{ animationDelay: "120ms" }}
+        style={{ animationDelay: '120ms' }}
       >
         <Card>
           <CardLabel
@@ -194,7 +194,7 @@ export default function ProfilePage() {
       {/* Levels + Plan */}
       <div
         className="grid grid-cols-1 sm:grid-cols-2 gap-3 animate-slide-up"
-        style={{ animationDelay: "180ms" }}
+        style={{ animationDelay: '180ms' }}
       >
         <Card>
           <CardLabel
@@ -241,14 +241,14 @@ export default function ProfilePage() {
             <InfoRow label="Hours per day" value={`${profile.hrsPerDay}h`} />
             <InfoRow
               label="New skills"
-              value={profile.skillsToLearn.join(", ") || "—"}
+              value={profile.skillsToLearn.join(', ') || '—'}
             />
           </div>
         </Card>
       </div>
 
       {/* Badges */}
-      <div className="animate-slide-up" style={{ animationDelay: "240ms" }}>
+      <div className="animate-slide-up" style={{ animationDelay: '240ms' }}>
         <Card className="text-foreground">
           <CardLabel
             icon={
@@ -285,7 +285,7 @@ export default function ProfilePage() {
       {/* Reset */}
       <div
         className="flex items-center justify-between gap-4 border border-destructive/30 rounded-lg p-4 animate-slide-up"
-        style={{ animationDelay: "300ms" }}
+        style={{ animationDelay: '300ms' }}
       >
         <div>
           <p className="text-sm font-bold">Reset everything</p>

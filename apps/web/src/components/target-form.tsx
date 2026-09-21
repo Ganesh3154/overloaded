@@ -1,10 +1,16 @@
-import Chip from "./chip";
-import { useFormContext } from "react-hook-form";
-import type { OnboardingFormData } from "../validator/onboarding";
+import Chip from './chip';
+import { useFormContext } from 'react-hook-form';
+import type { OnboardingFormData } from '../validator/onboarding';
 
 const SKILLS_TO_LEARN = [
-  "System Design", "Kubernetes", "GenAI/LLMs",
-  "Distributed Systems", "LLD", "Rust", "Go", "Cloud Architecture",
+  'System Design',
+  'Kubernetes',
+  'GenAI/LLMs',
+  'Distributed Systems',
+  'LLD',
+  'Rust',
+  'Go',
+  'Cloud Architecture',
 ];
 
 interface Props {
@@ -18,21 +24,21 @@ export default function TargetForm({ companies }: Props) {
     formState: { errors },
   } = useFormContext<OnboardingFormData>();
 
-  const targetCompanies = watch("targetCompanies");
-  const skillsToLearn = watch("skillsToLearn");
+  const targetCompanies = watch('targetCompanies');
+  const skillsToLearn = watch('skillsToLearn');
 
   const toggleCompany = (id: number) => {
     const updated = targetCompanies.includes(id)
       ? targetCompanies.filter((c) => c !== id)
       : [...targetCompanies, id];
-    setValue("targetCompanies", updated, { shouldValidate: true });
+    setValue('targetCompanies', updated, { shouldValidate: true });
   };
 
   const toggleSkill = (skill: string) => {
     const updated = skillsToLearn.includes(skill)
       ? skillsToLearn.filter((s) => s !== skill)
       : [...skillsToLearn, skill];
-    setValue("skillsToLearn", updated);
+    setValue('skillsToLearn', updated);
   };
 
   return (

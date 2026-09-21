@@ -1,45 +1,45 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Accordion from "@/src/components/accordion";
-import { Loader } from "@/src/components/loader";
-import { StatsCard } from "@/src/components/stats-card";
+import { useState } from 'react';
+import Accordion from '@/src/components/accordion';
+import { Loader } from '@/src/components/loader';
+import { StatsCard } from '@/src/components/stats-card';
 import {
   tagStyles,
   tagActiveStyles,
   type StatusFilter,
   type TagVariant,
   type RoadmapData,
-} from "@/src/types/roadmap";
-import { Ai, FilterIcon, Target, Trophy } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+} from '@/src/types/roadmap';
+import { Ai, FilterIcon, Target, Trophy } from '@hugeicons/core-free-icons';
+import { HugeiconsIcon } from '@hugeicons/react';
 import {
   computeStats,
   getActiveRoadmap,
   regenerateRoadmap,
   updateTaskStatus,
-} from "@/src/services/roadmap.service";
-import { getProfile } from "@/src/services/user.service";
-import { PageError } from "@/src/components/page-error";
-import { RoadmapGenerator } from "@/src/components/roadmap-generator";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+} from '@/src/services/roadmap.service';
+import { getProfile } from '@/src/services/user.service';
+import { PageError } from '@/src/components/page-error';
+import { RoadmapGenerator } from '@/src/components/roadmap-generator';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 const ALL_TAGS: TagVariant[] = [
-  "DSA",
-  "SYSTEM DESIGN",
-  "BEHAVIORAL",
-  "NEW SKILL",
-  "RESUME",
+  'DSA',
+  'SYSTEM DESIGN',
+  'BEHAVIORAL',
+  'NEW SKILL',
+  'RESUME',
 ];
 
 const statusActiveStyle: Record<StatusFilter, string> = {
-  ALL: "bg-cat-new-skill/20 text-cat-new-skill",
-  TODO: "bg-cat-behavioral/20 text-cat-behavioral",
-  DONE: "bg-cat-dsa/20 text-cat-dsa",
+  ALL: 'bg-cat-new-skill/20 text-cat-new-skill',
+  TODO: 'bg-cat-behavioral/20 text-cat-behavioral',
+  DONE: 'bg-cat-dsa/20 text-cat-dsa',
 };
 
 export default function RoadmapPage() {
-  const [statusFilter, setStatusFilter] = useState<StatusFilter>("ALL");
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('ALL');
   const [selectedTags, setSelectedTags] = useState<Set<TagVariant>>(new Set());
   const queryClient = useQueryClient();
 
@@ -49,12 +49,12 @@ export default function RoadmapPage() {
     isError,
     refetch,
   } = useQuery({
-    queryKey: ["roadmap"],
+    queryKey: ['roadmap'],
     queryFn: getActiveRoadmap,
   });
 
   const { data: profile, isLoading: isProfileLoading } = useQuery({
-    queryKey: ["profile"],
+    queryKey: ['profile'],
     queryFn: getProfile,
   });
 
@@ -65,7 +65,7 @@ export default function RoadmapPage() {
   } = useMutation({
     mutationFn: regenerateRoadmap,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["roadmap"] });
+      queryClient.invalidateQueries({ queryKey: ['roadmap'] });
     },
   });
 
@@ -75,17 +75,17 @@ export default function RoadmapPage() {
       status,
     }: {
       taskId: number;
-      status: "TODO" | "COMPLETED";
+      status: 'TODO' | 'COMPLETED';
     }) => updateTaskStatus(taskId, status),
     onMutate: async ({ taskId, status }) => {
-      await queryClient.cancelQueries({ queryKey: ["roadmap"] });
-      const previous = queryClient.getQueryData<RoadmapData>(["roadmap"]);
-      queryClient.setQueryData<RoadmapData>(["roadmap"], (old) => {
+      await queryClient.cancelQueries({ queryKey: ['roadmap'] });
+      const previous = queryClient.getQueryData<RoadmapData>(['roadmap']);
+      queryClient.setQueryData<RoadmapData>(['roadmap'], (old) => {
         if (!old) return old;
         const updatedWeeks = old.weeks.map((w) => ({
           ...w,
           tasks: w.tasks.map((t) =>
-            t.id === taskId ? { ...t, done: status === "COMPLETED" } : t,
+            t.id === taskId ? { ...t, done: status === 'COMPLETED' } : t,
           ),
         }));
         return {
@@ -98,13 +98,13 @@ export default function RoadmapPage() {
     },
     onError: (_err, _vars, context) => {
       if (context?.previous) {
-        queryClient.setQueryData(["roadmap"], context.previous);
+        queryClient.setQueryData(['roadmap'], context.previous);
       }
     },
   });
 
   const handleToggle = (taskId: number, currentDone: boolean) => {
-    toggleTask({ taskId, status: currentDone ? "TODO" : "COMPLETED" });
+    toggleTask({ taskId, status: currentDone ? 'TODO' : 'COMPLETED' });
   };
 
   const toggleTag = (tag: TagVariant) => {
@@ -146,12 +146,12 @@ export default function RoadmapPage() {
   const { stats, weeks, totalWeeks, generatedAt } = roadmap;
 
   const formattedDate = generatedAt
-    ? new Date(generatedAt).toLocaleDateString("en-GB", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
+    ? new Date(generatedAt).toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
       })
-    : "—";
+    : '—';
 
   return (
     <div className="flex flex-col gap-4 max-w-6xl w-full p-4 sm:p-6 mx-auto">
@@ -159,7 +159,7 @@ export default function RoadmapPage() {
         // {totalWeeks}-WEEK PLAN . GENERATED {formattedDate}
       </span>
       <h2 className="text-4xl font-bold">
-        Your{" "}
+        Your{' '}
         <span className="bg-linear-to-r from-lime-cs to-(--gradient-sky) bg-clip-text text-transparent">
           roadmap
         </span>
@@ -188,7 +188,7 @@ export default function RoadmapPage() {
           }
           value={`${stats.readiness}%`}
           progress={stats.readiness}
-          subtitle={`for ${(profile?.targetCompanies ?? []).map((tc) => tc.company.name).join(", ")}`}
+          subtitle={`for ${(profile?.targetCompanies ?? []).map((tc) => tc.company.name).join(', ')}`}
         />
         <StatsCard
           index={2}
@@ -211,14 +211,14 @@ export default function RoadmapPage() {
           </div>
 
           <div className="flex bg-background border border-grid-gray/40 rounded-md p-0.5">
-            {(["ALL", "TODO", "DONE"] as StatusFilter[]).map((s) => (
+            {(['ALL', 'TODO', 'DONE'] as StatusFilter[]).map((s) => (
               <button
                 key={s}
                 onClick={() => setStatusFilter(s)}
                 className={`flex items-center rounded text-[0.7rem] font-mono font-semibold py-1.5 px-3 transition-all duration-150 ${
                   statusFilter === s
                     ? statusActiveStyle[s]
-                    : "text-dim hover:text-foreground"
+                    : 'text-dim hover:text-foreground'
                 }`}
               >
                 {s}

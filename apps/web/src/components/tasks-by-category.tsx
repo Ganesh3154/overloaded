@@ -1,22 +1,22 @@
-"use client";
+'use client';
 
-import { RoadmapWeek } from "@/src/types/roadmap";
-import { Cell, Pie, PieChart } from "recharts";
+import { RoadmapWeek } from '@/src/types/roadmap';
+import { Cell, Pie, PieChart } from 'recharts';
 
 const CATEGORY_COLORS: Record<string, string> = {
-  DSA: "var(--cat-dsa)",
-  "SYSTEM DESIGN": "var(--cat-system-design)",
-  BEHAVIORAL: "var(--cat-behavioral)",
-  "NEW SKILL": "var(--cat-new-skill)",
-  RESUME: "var(--cat-resume)",
-  MOCK: "var(--cat-mock)",
+  DSA: 'var(--cat-dsa)',
+  'SYSTEM DESIGN': 'var(--cat-system-design)',
+  BEHAVIORAL: 'var(--cat-behavioral)',
+  'NEW SKILL': 'var(--cat-new-skill)',
+  RESUME: 'var(--cat-resume)',
+  MOCK: 'var(--cat-mock)',
 };
 
 function formatTag(tag: string) {
   return tag
-    .split(" ")
+    .split(' ')
     .map((w) => w.charAt(0) + w.slice(1).toLowerCase())
-    .join(" ");
+    .join(' ');
 }
 
 interface Props {
@@ -41,18 +41,18 @@ export function TasksByCategory({ weeks, completedTasks, totalTasks }: Props) {
   const donutData = Object.entries(categoryStats).map(([tag, s]) => ({
     name: tag,
     value: s.total,
-    color: CATEGORY_COLORS[tag] ?? "var(--text-dim)",
+    color: CATEGORY_COLORS[tag] ?? 'var(--text-dim)',
   }));
 
   return (
     <div
       className="bg-card border rounded-lg p-4 border-grid-gray/40 shadow-card transition-colors duration-200 animate-slide-up"
-      style={{ animationDelay: "250ms" }}
+      style={{ animationDelay: '250ms' }}
     >
       <div className="flex justify-between items-center mb-4">
         <span className="text-sm font-medium">Tasks by category</span>
         <span className="text-xs font-medium font-mono text-dim">
-          {completedTasks} / {totalTasks}{" "}
+          {completedTasks} / {totalTasks}{' '}
           <span className="text-lime-cs">COMPLETE</span>
         </span>
       </div>
@@ -79,14 +79,17 @@ export function TasksByCategory({ weeks, completedTasks, totalTasks }: Props) {
         <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-2 w-full">
           {Object.entries(categoryStats).map(([tag, s]) => {
             const pct = s.total > 0 ? Math.round((s.done / s.total) * 100) : 0;
-            const color = CATEGORY_COLORS[tag] ?? "var(--text-dim)";
+            const color = CATEGORY_COLORS[tag] ?? 'var(--text-dim)';
             return (
               <div
                 key={tag}
                 className="flex items-center justify-between bg-card border border-grid-gray/20 rounded-lg px-3 py-2.5"
               >
                 <div className="flex items-center gap-2">
-                  <div className="rounded-full h-2 w-2 shrink-0" style={{ background: color }} />
+                  <div
+                    className="rounded-full h-2 w-2 shrink-0"
+                    style={{ background: color }}
+                  />
                   <span className="text-sm">{formatTag(tag)}</span>
                 </div>
                 <div className="flex items-center gap-2 text-xs font-mono">
@@ -95,7 +98,9 @@ export function TasksByCategory({ weeks, completedTasks, totalTasks }: Props) {
                   </span>
                   <span
                     className="font-medium"
-                    style={{ color: pct > 0 ? "var(--lime-cs)" : "var(--text-dim)" }}
+                    style={{
+                      color: pct > 0 ? 'var(--lime-cs)' : 'var(--text-dim)',
+                    }}
                   >
                     {pct}%
                   </span>

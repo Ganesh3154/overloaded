@@ -1,4 +1,4 @@
-import { IconSvgElement } from "@hugeicons/react";
+import { IconSvgElement } from '@hugeicons/react';
 
 export interface RegisterFormData {
   fullName: string;

@@ -1,37 +1,37 @@
-"use client";
+'use client';
 
-import Button from "@/src/components/button";
-import IdentifyForm from "@/src/components/identify-form";
-import PlanForm from "@/src/components/plan-form";
-import SkillForm from "@/src/components/skill-form";
-import Stepper from "@/src/components/stepper";
-import TargetForm from "@/src/components/target-form";
+import Button from '@/src/components/button';
+import IdentifyForm from '@/src/components/identify-form';
+import PlanForm from '@/src/components/plan-form';
+import SkillForm from '@/src/components/skill-form';
+import Stepper from '@/src/components/stepper';
+import TargetForm from '@/src/components/target-form';
 import {
   onboardingSchema,
   type OnboardingFormData,
   STEP_FIELDS,
-} from "@/src/validator/onboarding";
-import { validate } from "@/src/validator/resolver";
-import { onboard } from "@/src/services/onboarding.service";
-import { regenerateRoadmap } from "@/src/services/roadmap.service";
-import { RoadmapGenerator } from "@/src/components/roadmap-generator";
-import { getCompanies } from "@/src/services/company.service";
-import { ArrowLeft, ArrowRight, Tick02Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { useEffect, useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+} from '@/src/validator/onboarding';
+import { validate } from '@/src/validator/resolver';
+import { onboard } from '@/src/services/onboarding.service';
+import { regenerateRoadmap } from '@/src/services/roadmap.service';
+import { RoadmapGenerator } from '@/src/components/roadmap-generator';
+import { getCompanies } from '@/src/services/company.service';
+import { ArrowLeft, ArrowRight, Tick02Icon } from '@hugeicons/core-free-icons';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { useEffect, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 
 const STEPS = [
-  { title: "Step 01", description: "Identify" },
-  { title: "Step 02", description: "Skills" },
-  { title: "Step 03", description: "Targets" },
-  { title: "Step 04", description: "Plan" },
+  { title: 'Step 01', description: 'Identify' },
+  { title: 'Step 02', description: 'Skills' },
+  { title: 'Step 03', description: 'Targets' },
+  { title: 'Step 04', description: 'Plan' },
 ];
 
 const DEFAULT_VALUES: OnboardingFormData = {
-  username: "",
+  username: '',
   yearsOfExperience: 0,
   learningStyle: [],
   techStack: [],
@@ -46,7 +46,7 @@ const DEFAULT_VALUES: OnboardingFormData = {
 
 function StepContent({ step }: { step: number }) {
   const { data: companies = [] } = useQuery({
-    queryKey: ["companies"],
+    queryKey: ['companies'],
     queryFn: getCompanies,
   });
 
@@ -68,10 +68,11 @@ export default function OnboardingPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [activeStep, setActiveStep] = useState(0);
-  const [phase, setPhase] = useState<"form" | "generating">("form");
+  const [phase, setPhase] = useState<'form' | 'generating'>('form');
 
   useEffect(() => {
-    if (localStorage.getItem("is_onboarded") === "true") router.replace("/dashboard");
+    if (localStorage.getItem('is_onboarded') === 'true')
+      router.replace('/dashboard');
   }, []);
 
   const form = useForm<OnboardingFormData>({
@@ -86,20 +87,20 @@ export default function OnboardingPage() {
   } = useMutation({
     mutationFn: regenerateRoadmap,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["roadmap"] });
-      setTimeout(() => router.push("/dashboard"), 1200);
+      queryClient.invalidateQueries({ queryKey: ['roadmap'] });
+      setTimeout(() => router.push('/dashboard'), 1200);
     },
   });
 
   const { mutate, isPending } = useMutation({
     mutationFn: onboard,
     onSuccess: () => {
-      localStorage.setItem("is_onboarded", "true");
-      setPhase("generating");
+      localStorage.setItem('is_onboarded', 'true');
+      setPhase('generating');
     },
   });
 
-  if (phase === "generating") {
+  if (phase === 'generating') {
     return (
       <main className="flex-1 min-h-0 flex flex-col">
         <RoadmapGenerator
@@ -112,7 +113,7 @@ export default function OnboardingPage() {
         {isGenerateError && (
           <div className="flex justify-center pb-8">
             <button
-              onClick={() => router.push("/dashboard")}
+              onClick={() => router.push('/dashboard')}
               className="text-dim text-xs font-mono hover:text-foreground transition-colors underline underline-offset-4"
             >
               skip → go to dashboard
@@ -146,7 +147,7 @@ export default function OnboardingPage() {
                 // Onboarding
               </span>
               <h1 className="text-4xl font-bold mt-1">
-                Let&apos;s get you{" "}
+                Let&apos;s get you{' '}
                 <span className="bg-linear-to-r from-lime-cs to-[var(--gradient-sky)] bg-clip-text text-transparent">
                   set up
                 </span>
@@ -189,7 +190,7 @@ export default function OnboardingPage() {
                         ) : (
                           <div
                             className={`w-1.5 h-1.5 rounded-full ${
-                              isActive ? "bg-lime-cs" : "bg-grid-gray/60"
+                              isActive ? 'bg-lime-cs' : 'bg-grid-gray/60'
                             }`}
                           />
                         )}
@@ -231,7 +232,7 @@ export default function OnboardingPage() {
               ) : (
                 <Button variant="primary" type="submit" disabled={isPending}>
                   <span className="mr-1">
-                    {isPending ? "Submitting…" : "Submit"}
+                    {isPending ? 'Submitting…' : 'Submit'}
                   </span>
                   <HugeiconsIcon icon={Tick02Icon} size={16} />
                 </Button>

@@ -1,4 +1,4 @@
-import { Loader } from "@/src/components/loader";
+import { Loader } from '@/src/components/loader';
 
 /**
  * Next.js Suspense boundary for the (app) route group.

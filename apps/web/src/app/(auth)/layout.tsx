@@ -1,26 +1,26 @@
-import FeatureCard from "@/src/components/feature-card";
-import OverloadedIcon from "@/src/components/overloaded-icon";
+import FeatureCard from '@/src/components/feature-card';
+import OverloadedIcon from '@/src/components/overloaded-icon';
 import {
   Award03Icon,
   BrainIcon,
   Target01Icon,
-} from "@hugeicons/core-free-icons";
+} from '@hugeicons/core-free-icons';
 
 const FEATURES = [
   {
     icon: Target01Icon,
-    title: "Company-targeted roadmaps",
-    description: "Tailored to Google, Amazon, Meta, and 50+ more",
+    title: 'Company-targeted roadmaps',
+    description: 'Tailored to Google, Amazon, Meta, and 50+ more',
   },
   {
     icon: BrainIcon,
-    title: "AI coaching",
-    description: "Instant answers and guided walkthroughs 24/7",
+    title: 'AI coaching',
+    description: 'Instant answers and guided walkthroughs 24/7',
   },
   {
     icon: Award03Icon,
-    title: "Gamified progress",
-    description: "XP, streaks, and levels to keep you on track",
+    title: 'Gamified progress',
+    description: 'XP, streaks, and levels to keep you on track',
   },
 ];
 
@@ -51,7 +51,7 @@ export default function AuthLayout({
         <div className="space-y-8">
           <div
             className="inline-flex border border-lime-cs/30 rounded-full items-center px-3 py-1 bg-lime-cs/10 text-lime-cs gap-2 animate-fade-in"
-            style={{ animationDelay: "60ms" }}
+            style={{ animationDelay: '60ms' }}
           >
             <span className="w-1.5 h-1.5 rounded-full animate-pulse bg-lime-cs" />
             <span className="text-xs font-mono font-medium">
@@ -61,7 +61,7 @@ export default function AuthLayout({
 
           <div
             className="text-4xl xl:text-5xl font-bold animate-slide-up"
-            style={{ animationDelay: "120ms" }}
+            style={{ animationDelay: '120ms' }}
           >
             <span>Crack your next </span>
             <br />
@@ -70,13 +70,13 @@ export default function AuthLayout({
 
           <p
             className="text-dim text-base xl:text-lg font-sans animate-slide-up"
-            style={{ animationDelay: "180ms" }}
+            style={{ animationDelay: '180ms' }}
           >
             Personalized roadmaps, adaptive learning
             <br /> paths, and an AI coach — all in one platform.
           </p>
 
-          <div className="animate-slide-up" style={{ animationDelay: "220ms" }}>
+          <div className="animate-slide-up" style={{ animationDelay: '220ms' }}>
             <FeatureCard features={FEATURES} />
           </div>
         </div>

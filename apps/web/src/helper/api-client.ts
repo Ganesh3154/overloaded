@@ -11,7 +11,7 @@ export interface ApiError {
   timestamp: string;
 }
 
-const BASE_URL = process.env["NEXT_PUBLIC_API_URL"] ?? "http://localhost:3001";
+const BASE_URL = process.env['NEXT_PUBLIC_API_URL'] ?? 'http://localhost:3001';
 
 export class ApiClientError extends Error {
   constructor(
@@ -20,19 +20,19 @@ export class ApiClientError extends Error {
     public readonly error: string,
   ) {
     super(message);
-    this.name = "ApiClientError";
+    this.name = 'ApiClientError';
   }
 }
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const clientToken =
-    typeof window !== "undefined" ? localStorage.getItem("access_token") : null;
+    typeof window !== 'undefined' ? localStorage.getItem('access_token') : null;
 
   const res = await fetch(`${BASE_URL}${path}`, {
     ...init,
     // credentials: "include",
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...(clientToken ? { Authorization: `Bearer ${clientToken}` } : {}),
       ...init?.headers, // explicit headers (e.g. server-side withAuth) take precedence
     },
@@ -53,24 +53,24 @@ function withAuth(token: string): RequestInit {
 
 export const apiClient = {
   get<T>(path: string, init?: RequestInit) {
-    return request<T>(path, { ...init, method: "GET" });
+    return request<T>(path, { ...init, method: 'GET' });
   },
   post<T>(path: string, body: unknown, init?: RequestInit) {
     return request<T>(path, {
       ...init,
-      method: "POST",
+      method: 'POST',
       body: JSON.stringify(body),
     });
   },
   patch<T>(path: string, body: unknown, init?: RequestInit) {
     return request<T>(path, {
       ...init,
-      method: "PATCH",
+      method: 'PATCH',
       body: JSON.stringify(body),
     });
   },
   delete<T>(path: string, init?: RequestInit) {
-    return request<T>(path, { ...init, method: "DELETE" });
+    return request<T>(path, { ...init, method: 'DELETE' });
   },
   withAuth,
 };
