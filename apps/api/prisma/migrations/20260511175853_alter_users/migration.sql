@@ -1,0 +1,7 @@
+-- AlterTable
+ALTER TABLE "users" ALTER COLUMN "behavioralConfidence" DROP NOT NULL,
+ALTER COLUMN "dsaLevel" DROP NOT NULL,
+ALTER COLUMN "hrsPerDay" DROP NOT NULL,
+ALTER COLUMN "prepTime" DROP NOT NULL,
+ALTER COLUMN "systemDesignLevel" DROP NOT NULL,
+ALTER COLUMN "yearsOfExperience" DROP NOT NULL;

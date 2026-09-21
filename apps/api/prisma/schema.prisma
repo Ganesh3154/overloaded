@@ -1,0 +1,114 @@
+datasource db {
+    provider = "postgresql"
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+enum Status {
+    ACTIVE
+    INACTIVE
+}
+
+enum WeekStatus {
+    PENDING
+    ONGOING
+    COMPLETED
+}
+
+enum TaskStatus {
+    TODO
+    COMPLETED
+}
+
+enum TaskTag {
+    DSA
+    SYSTEM_DESIGN
+    BEHAVIORAL
+    NEW_SKILL
+    RESUME
+}
+
+model User {
+    id                   Int                 @id @default(autoincrement())
+    uid                  String              @unique() @default(uuid()) @db.Uuid()
+    username             String?             @db.VarChar(100)
+    fullName             String              @db.VarChar(150)
+    email                String              @unique() @db.VarChar(255)
+    password             String              @db.VarChar(255)
+    yearsOfExperience    Int?                @db.SmallInt
+    learningStyle        String[]
+    techStack            String[]
+    dsaLevel             Int?                @db.SmallInt
+    systemDesignLevel    Int?                @db.SmallInt
+    behavioralConfidence Int?                @db.SmallInt
+    targetCompanies      UserTargetCompany[]
+    skillsToLearn        String[]
+    prepTime             Int?                @db.SmallInt
+    hrsPerDay            Int?                @db.SmallInt
+    isOnboarded          Boolean             @default(false) @db.Boolean
+    isDeleted            Boolean             @db.Boolean
+    roadmaps             Roadmap[]
+
+    @@map("users")
+}
+
+model Company {
+    id         Int                 @id @default(autoincrement())
+    name       String              @unique() @db.VarChar(150)
+    targetedBy UserTargetCompany[]
+
+    @@map("companies")
+}
+
+model UserTargetCompany {
+    id        Int     @id @default(autoincrement())
+    userId    Int
+    companyId Int
+    user      User    @relation(fields: [userId], references: [id])
+    company   Company @relation(fields: [companyId], references: [id])
+
+    @@unique([userId, companyId])
+    @@map("user_target_companies")
+}
+
+model Roadmap {
+    id          Int           @id @default(autoincrement())
+    userId      Int
+    weeks       RoadmapWeek[]
+    totalWeeks  Int
+    status      Status
+    generatedAt DateTime      @default(now())
+
+    user User @relation(fields: [userId], references: [id])
+
+    @@map("roadmaps")
+}
+
+model RoadmapWeek {
+    id         Int        @id @default(autoincrement())
+    roadmapId  Int
+    weekNumber Int        @db.SmallInt
+    title      String     @db.VarChar(150)
+    status     WeekStatus @default(PENDING)
+
+    tasks   RoadmapTask[]
+    roadmap Roadmap       @relation(fields: [roadmapId], references: [id], onDelete: Cascade)
+
+    @@map("roadmap_weeks")
+}
+
+model RoadmapTask {
+    id            Int        @id @default(autoincrement())
+    roadmapWeekId Int
+    title         String     @db.VarChar(255)
+    tag           TaskTag
+    status        TaskStatus @default(TODO)
+    duration      String     @db.VarChar(20)
+    xp            Int        @db.SmallInt
+
+    roadmapWeek RoadmapWeek @relation(fields: [roadmapWeekId], references: [id], onDelete: Cascade)
+
+    @@map("roadmap_tasks")
+}
