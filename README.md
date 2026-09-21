@@ -182,18 +182,3 @@ Run from the repo root and fanned out to every workspace package by Turborepo:
 | `pnpm test` | Run API unit tests |
 
 Scope any of these to a single package with Turborepo's filter flag, e.g. `pnpm turbo run build --filter=api`.
-
-## CI
-
-Two path-filtered GitHub Actions workflows in `.github/workflows/`:
-- **Web CI** — triggers on changes to `apps/web`, `packages/shared`, or shared root config (`pnpm-lock.yaml`, `turbo.json`, `tsconfig.base.json`, `.prettierrc`); lints and builds the frontend
-- **Api CI** — triggers on the same shared-config paths plus `apps/api`; generates the Prisma client, then lints, builds, and unit-tests the backend
-
-There is currently no deploy pipeline — CI covers lint/build/test only.
-
-## Notable design decisions
-
-- **Shared validation, not shared-by-convention.** Onboarding, auth, and roadmap shapes are defined once in `packages/shared` as Zod schemas and consumed by both apps, closing a real gap where the frontend and backend had each independently written (and drifted from) the same validation rules — including the frontend at one point enforcing a weaker password policy than the API actually required.
-- **One canonical enum for task tags**, instead of three separate spellings that used to exist across the Prisma schema, the LLM-facing prompt/schema, and the frontend's display layer, bridged by hand-written translation tables.
-- **Zod over class-validator for request DTOs.** A small `ZodValidationPipe` validates controller inputs against the same schemas the frontend uses, rather than maintaining parallel class-validator classes.
-- **`useSyncExternalStore` over effect-based state sync** for anything backed by `localStorage` (theme, auth status), which is the pattern React itself recommends for external, SSR-unavailable state — it avoids an extra render pass and the "setState synchronously in an effect" pitfall.
