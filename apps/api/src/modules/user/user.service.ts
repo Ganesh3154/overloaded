@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import type { OnboardingInput } from '@overloaded/shared';
 import { DatabaseService } from '../../database/database.service';
 import { CreateUserDto } from 'src/modules/user/dto/user.dto';
 import { LoggerService } from 'src/logger/logger.service';
@@ -48,8 +49,11 @@ export class UserService {
     });
   }
 
-  async updateByUid(uid: string, { targetCompanies, ...data }) {
-    this.logger.info(`Updating user: ${uid} with ${data}`);
+  async updateByUid(
+    uid: string,
+    { targetCompanies, ...data }: OnboardingInput,
+  ) {
+    this.logger.info(`Updating user: ${uid} with ${JSON.stringify(data)}`);
 
     return await this.db.user.update({
       where: {

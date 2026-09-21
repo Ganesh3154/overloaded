@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useSyncExternalStore } from 'react';
 
 type Theme = 'dark' | 'light';
 
@@ -9,22 +9,39 @@ const ThemeContext = createContext<{
   setTheme: (t: Theme) => void;
 }>({ theme: 'dark', setTheme: () => {} });
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>('dark');
+let themeListeners: Array<() => void> = [];
 
-  useEffect(() => {
-    const stored = localStorage.getItem('theme') as Theme | null;
-    if (stored === 'light' || stored === 'dark') setThemeState(stored);
-  }, []);
-
-  const setTheme = (t: Theme) => {
-    setThemeState(t);
-    localStorage.setItem('theme', t);
-    document.documentElement.classList.toggle('light', t === 'light');
+function subscribeTheme(callback: () => void) {
+  themeListeners.push(callback);
+  return () => {
+    themeListeners = themeListeners.filter((l) => l !== callback);
   };
+}
+
+function getThemeSnapshot(): Theme {
+  const stored = localStorage.getItem('theme');
+  return stored === 'light' ? 'light' : 'dark';
+}
+
+function getServerThemeSnapshot(): Theme {
+  return 'dark';
+}
+
+function writeTheme(t: Theme) {
+  localStorage.setItem('theme', t);
+  document.documentElement.classList.toggle('light', t === 'light');
+  themeListeners.forEach((l) => l());
+}
+
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const theme = useSyncExternalStore(
+    subscribeTheme,
+    getThemeSnapshot,
+    getServerThemeSnapshot,
+  );
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider value={{ theme, setTheme: writeTheme }}>
       {children}
     </ThemeContext.Provider>
   );

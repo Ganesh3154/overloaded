@@ -32,15 +32,17 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     const request = ctx.getRequest<Request>();
 
     const { status, message } = this.resolve(exception);
+    const displayMessage =
+      typeof message === 'string' ? message : JSON.stringify(message);
 
     if (status >= 500) {
       this.logger.error(
-        `${request.method} ${request.url} ${status} — ${message}`,
+        `${request.method} ${request.url} ${status} — ${displayMessage}`,
         exception instanceof Error ? exception.stack : undefined,
       );
     } else {
       this.logger.warn(
-        `${request.method} ${request.url} ${status} — ${message}`,
+        `${request.method} ${request.url} ${status} — ${displayMessage}`,
         exception,
       );
     }

@@ -73,7 +73,7 @@ export default function OnboardingPage() {
   useEffect(() => {
     if (localStorage.getItem('is_onboarded') === 'true')
       router.replace('/dashboard');
-  }, []);
+  }, [router]);
 
   const form = useForm<OnboardingFormData>({
     resolver: validate(onboardingSchema),
@@ -144,7 +144,7 @@ export default function OnboardingPage() {
             {/* Header */}
             <div>
               <span className="text-lime-cs text-xs font-mono font-medium tracking-widest uppercase">
-                // Onboarding
+                {'// Onboarding'}
               </span>
               <h1 className="text-4xl font-bold mt-1">
                 Let&apos;s get you{' '}
@@ -175,7 +175,6 @@ export default function OnboardingPage() {
                   return (
                     <Stepper
                       key={step.title}
-                      step={step}
                       active={isActive}
                       completed={isCompleted}
                       onClick={() => setActiveStep(index)}

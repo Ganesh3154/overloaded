@@ -8,16 +8,10 @@ interface Props {
 
 const OUTER = 90;
 const INNER = 60;
-const MID = (OUTER + INNER) / 2;
 
 export function ReadinessCard({ readiness }: Props) {
   const pct = Math.min(100, Math.max(0, readiness));
   const data = [{ value: pct }, { value: 100 - pct }];
-
-  // Recharts: startAngle=90 is 12-o'clock, angles decrease clockwise
-  const tipAngleRad = ((90 - (pct / 100) * 360) * Math.PI) / 180;
-  const tipX = 100 + MID * Math.cos(tipAngleRad);
-  const tipY = 100 - MID * Math.sin(tipAngleRad);
 
   return (
     <div

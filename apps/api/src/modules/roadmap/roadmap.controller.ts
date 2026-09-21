@@ -8,7 +8,7 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { User } from 'src/guards/auth.guard';
+import { User, type JwtPayload } from 'src/guards/auth.guard';
 import { LoggerService } from 'src/logger/logger.service';
 import { UserService } from '../user/user.service';
 import {
@@ -26,7 +26,7 @@ export class RoadmapController {
     private roadmapService: RoadmapService,
   ) {}
   @Post()
-  async regenerate(@User() user) {
+  async regenerate(@User() user: JwtPayload) {
     const userProfile = await this.userService.find({ id: user.id });
     if (!userProfile) {
       this.logger.error(`User not found`);
@@ -40,7 +40,7 @@ export class RoadmapController {
   }
 
   @Get()
-  async getRoadmaps(@User() user) {
+  async getRoadmaps(@User() user: JwtPayload) {
     return await this.roadmapService.getRoadmap({ userId: user.id });
   }
 
@@ -49,7 +49,7 @@ export class RoadmapController {
     @Param('id', ParseIntPipe) taskId: number,
     @Body(new ZodValidationPipe(updateTaskStatusSchema))
     dto: UpdateTaskStatusInput,
-    @User() user,
+    @User() user: JwtPayload,
   ) {
     return this.roadmapService.updateTaskStatus(taskId, dto.status, user.id);
   }

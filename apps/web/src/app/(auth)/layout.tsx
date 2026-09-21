@@ -55,7 +55,7 @@ export default function AuthLayout({
           >
             <span className="w-1.5 h-1.5 rounded-full animate-pulse bg-lime-cs" />
             <span className="text-xs font-mono font-medium">
-              // AI-powered interview prep
+              {'// AI-powered interview prep'}
             </span>
           </div>
 

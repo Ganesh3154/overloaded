@@ -131,7 +131,7 @@ export default function ProfilePage() {
         </div>
         <div className="flex-1 min-w-0">
           <span className="text-xs font-mono font-medium text-lime-cs uppercase tracking-wide">
-            // Profile
+            {'// Profile'}
           </span>
           <h2 className="text-3xl font-bold">
             {profile.fullName || profile.username}

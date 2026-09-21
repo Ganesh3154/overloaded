@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { LoggerService } from 'src/logger/logger.service';
 import { UserService } from '../user/user.service';
 import type { OnboardingInput } from '@overloaded/shared';
-import { RoadmapService } from '../roadmap/roadmap.service';
 
 @Injectable()
 export class OnboardingService {
@@ -15,7 +14,7 @@ export class OnboardingService {
 
     const user = await this.userService.updateByUid(uid, data);
 
-    this.logger.info(`Onboarding complete ${user}`);
+    this.logger.info(`Onboarding complete for user ${user.id}`);
     return user;
   }
 }

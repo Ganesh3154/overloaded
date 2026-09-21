@@ -2,13 +2,11 @@ import { ButtonHTMLAttributes } from 'react';
 import { cn } from '../helper/class-merge';
 
 interface StepperProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  step: { title: string; description: string };
   active: boolean;
   completed?: boolean;
 }
 
 export default function Stepper({
-  step,
   active,
   completed = false,
   children,

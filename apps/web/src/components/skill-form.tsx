@@ -40,7 +40,6 @@ function LevelSelector({
         {LEVELS.map((level) => (
           <Stepper
             key={level.title}
-            step={level}
             active={value === level.level}
             onClick={() => onChange(level.level)}
           >

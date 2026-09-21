@@ -107,7 +107,8 @@ export default function RoadmapPage() {
   const toggleTag = (tag: TaskTag) => {
     setSelectedTags((prev) => {
       const next = new Set(prev);
-      next.has(tag) ? next.delete(tag) : next.add(tag);
+      if (next.has(tag)) next.delete(tag);
+      else next.add(tag);
       return next;
     });
   };
@@ -153,7 +154,8 @@ export default function RoadmapPage() {
   return (
     <div className="flex flex-col gap-4 max-w-6xl w-full p-4 sm:p-6 mx-auto">
       <span className="text-xs font-mono font-medium text-lime-cs uppercase">
-        // {totalWeeks}-WEEK PLAN . GENERATED {formattedDate}
+        {'// '}
+        {totalWeeks}-WEEK PLAN . GENERATED {formattedDate}
       </span>
       <h2 className="text-4xl font-bold">
         Your{' '}
