@@ -1,10 +1,7 @@
 import { IconSvgElement } from '@hugeicons/react';
+import type { LoginInput, RegisterInput } from '@overloaded/shared';
 
-export interface RegisterFormData {
-  fullName: string;
-  email: string;
-  password: string;
-}
+export type RegisterFormData = RegisterInput;
 
 export interface RegisterFormInput {
   label: string;
@@ -15,10 +12,7 @@ export interface RegisterFormInput {
   icon: IconSvgElement;
 }
 
-export interface LoginFormData {
-  email: string;
-  password: string;
-}
+export type LoginFormData = LoginInput;
 
 export interface LoginFormInput {
   label: string;

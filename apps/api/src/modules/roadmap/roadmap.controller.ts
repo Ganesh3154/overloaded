@@ -11,7 +11,11 @@ import {
 import { User } from 'src/guards/auth.guard';
 import { LoggerService } from 'src/logger/logger.service';
 import { UserService } from '../user/user.service';
-import { UpdateTaskStatusDto } from './dto/roadmap.dto';
+import {
+  updateTaskStatusSchema,
+  type UpdateTaskStatusInput,
+} from '@overloaded/shared';
+import { ZodValidationPipe } from 'src/common/pipes/zod-validation.pipe';
 import { RoadmapService } from './roadmap.service';
 
 @Controller('roadmap')
@@ -43,7 +47,8 @@ export class RoadmapController {
   @Patch('task/:id')
   async updateTaskStatus(
     @Param('id', ParseIntPipe) taskId: number,
-    @Body() dto: UpdateTaskStatusDto,
+    @Body(new ZodValidationPipe(updateTaskStatusSchema))
+    dto: UpdateTaskStatusInput,
     @User() user,
   ) {
     return this.roadmapService.updateTaskStatus(taskId, dto.status, user.id);

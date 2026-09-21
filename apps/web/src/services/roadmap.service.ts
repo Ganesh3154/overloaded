@@ -1,55 +1,15 @@
+import type { RoadmapResponse, TaskStatus } from '@overloaded/shared';
 import { apiClient } from '../helper/api-client';
-import type {
-  RoadmapData,
-  RoadmapStats,
-  RoadmapWeek,
-  TagVariant,
-} from '../types/roadmap';
+import type { RoadmapData, RoadmapStats, RoadmapWeek } from '../types/roadmap';
 
-interface ApiRoadmapTask {
-  id: number;
-  roadmapWeekId: number;
-  title: string;
-  tag: string;
-  status: 'TODO' | 'COMPLETED';
-  duration: string;
-  xp: number;
-}
-
-interface ApiRoadmapWeek {
-  id: number;
-  roadmapId: number;
-  weekNumber: number;
-  title: string;
-  status: string;
-  tasks: ApiRoadmapTask[];
-}
-
-interface ApiRoadmapResponse {
-  id: number;
-  userId: number;
-  totalWeeks: number;
-  status: 'ACTIVE' | 'INACTIVE';
-  generatedAt: string;
-  weeks: ApiRoadmapWeek[];
-}
-
-const apiTagToVariant: Record<string, TagVariant> = {
-  DSA: 'DSA',
-  SYSTEM_DESIGN: 'SYSTEM DESIGN',
-  BEHAVIORAL: 'BEHAVIORAL',
-  NEW_SKILL: 'NEW SKILL',
-  RESUME: 'RESUME',
-};
-
-function mapRoadmap(api: ApiRoadmapResponse): RoadmapData {
+function mapRoadmap(api: RoadmapResponse): RoadmapData {
   const weeks = api.weeks.map((week) => ({
     weekNumber: week.weekNumber,
     title: week.title,
     tasks: week.tasks.map((task) => ({
       id: task.id,
       title: task.title,
-      tag: apiTagToVariant[task.tag] ?? (task.tag as TagVariant),
+      tag: task.tag,
       duration: task.duration,
       xp: task.xp,
       done: task.status === 'COMPLETED',
@@ -64,20 +24,17 @@ function mapRoadmap(api: ApiRoadmapResponse): RoadmapData {
 }
 
 export async function getActiveRoadmap(): Promise<RoadmapData | null> {
-  const roadmaps = await apiClient.get<ApiRoadmapResponse[]>('/roadmap');
+  const roadmaps = await apiClient.get<RoadmapResponse[]>('/roadmap');
   const active = roadmaps.find((r) => r.status === 'ACTIVE') ?? roadmaps[0];
   return active ? mapRoadmap(active) : null;
 }
 
 export async function regenerateRoadmap() {
-  const api = await apiClient.post<ApiRoadmapResponse>('/roadmap', undefined);
+  const api = await apiClient.post<RoadmapResponse>('/roadmap', undefined);
   return api;
 }
 
-export async function updateTaskStatus(
-  taskId: number,
-  status: 'TODO' | 'COMPLETED',
-) {
+export async function updateTaskStatus(taskId: number, status: TaskStatus) {
   return apiClient.patch<void>(`/roadmap/task/${taskId}`, { status });
 }
 

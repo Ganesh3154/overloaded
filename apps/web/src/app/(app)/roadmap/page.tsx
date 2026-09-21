@@ -8,9 +8,14 @@ import {
   tagStyles,
   tagActiveStyles,
   type StatusFilter,
-  type TagVariant,
   type RoadmapData,
 } from '@/src/types/roadmap';
+import {
+  TASK_TAG_LABELS,
+  TASK_TAGS,
+  type TaskStatus,
+  type TaskTag,
+} from '@overloaded/shared';
 import { Ai, FilterIcon, Target, Trophy } from '@hugeicons/core-free-icons';
 import { HugeiconsIcon } from '@hugeicons/react';
 import {
@@ -24,14 +29,6 @@ import { PageError } from '@/src/components/page-error';
 import { RoadmapGenerator } from '@/src/components/roadmap-generator';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-const ALL_TAGS: TagVariant[] = [
-  'DSA',
-  'SYSTEM DESIGN',
-  'BEHAVIORAL',
-  'NEW SKILL',
-  'RESUME',
-];
-
 const statusActiveStyle: Record<StatusFilter, string> = {
   ALL: 'bg-cat-new-skill/20 text-cat-new-skill',
   TODO: 'bg-cat-behavioral/20 text-cat-behavioral',
@@ -40,7 +37,7 @@ const statusActiveStyle: Record<StatusFilter, string> = {
 
 export default function RoadmapPage() {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('ALL');
-  const [selectedTags, setSelectedTags] = useState<Set<TagVariant>>(new Set());
+  const [selectedTags, setSelectedTags] = useState<Set<TaskTag>>(new Set());
   const queryClient = useQueryClient();
 
   const {
@@ -75,7 +72,7 @@ export default function RoadmapPage() {
       status,
     }: {
       taskId: number;
-      status: 'TODO' | 'COMPLETED';
+      status: TaskStatus;
     }) => updateTaskStatus(taskId, status),
     onMutate: async ({ taskId, status }) => {
       await queryClient.cancelQueries({ queryKey: ['roadmap'] });
@@ -107,7 +104,7 @@ export default function RoadmapPage() {
     toggleTask({ taskId, status: currentDone ? 'TODO' : 'COMPLETED' });
   };
 
-  const toggleTag = (tag: TagVariant) => {
+  const toggleTag = (tag: TaskTag) => {
     setSelectedTags((prev) => {
       const next = new Set(prev);
       next.has(tag) ? next.delete(tag) : next.add(tag);
@@ -227,7 +224,7 @@ export default function RoadmapPage() {
           </div>
 
           <div className="flex flex-wrap gap-1.5 border-t sm:border-s sm:border-t-0 ps-3 sm:pt-0 pt-3 border-grid-gray/40">
-            {ALL_TAGS.map((tag) => (
+            {TASK_TAGS.map((tag) => (
               <button
                 key={tag}
                 onClick={() => toggleTag(tag)}
@@ -235,7 +232,7 @@ export default function RoadmapPage() {
                   selectedTags.has(tag) ? tagActiveStyles[tag] : tagStyles[tag]
                 }`}
               >
-                {tag}
+                {TASK_TAG_LABELS[tag]}
               </button>
             ))}
           </div>

@@ -15,15 +15,9 @@ import { useForm } from 'react-hook-form';
 import Input from './input';
 import Link from 'next/link';
 import Button from './button';
-import { z } from 'zod';
+import { registerSchema } from '@overloaded/shared';
 import { validate } from '../validator/resolver';
 import { RegisterFormData, RegisterFormInput } from '../types/form';
-
-const registerSchema = z.object({
-  fullName: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(8, 'Password must be at least 8 characters'),
-});
 
 const INPUTS: RegisterFormInput[] = [
   {

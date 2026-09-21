@@ -1,23 +1,16 @@
 'use client';
 
 import { RoadmapWeek } from '@/src/types/roadmap';
+import { TASK_TAG_LABELS, type TaskTag } from '@overloaded/shared';
 import { Cell, Pie, PieChart } from 'recharts';
 
-const CATEGORY_COLORS: Record<string, string> = {
+const CATEGORY_COLORS: Record<TaskTag, string> = {
   DSA: 'var(--cat-dsa)',
-  'SYSTEM DESIGN': 'var(--cat-system-design)',
+  SYSTEM_DESIGN: 'var(--cat-system-design)',
   BEHAVIORAL: 'var(--cat-behavioral)',
-  'NEW SKILL': 'var(--cat-new-skill)',
+  NEW_SKILL: 'var(--cat-new-skill)',
   RESUME: 'var(--cat-resume)',
-  MOCK: 'var(--cat-mock)',
 };
-
-function formatTag(tag: string) {
-  return tag
-    .split(' ')
-    .map((w) => w.charAt(0) + w.slice(1).toLowerCase())
-    .join(' ');
-}
 
 interface Props {
   weeks: RoadmapWeek[];
@@ -35,13 +28,13 @@ export function TasksByCategory({ weeks, completedTasks, totalTasks }: Props) {
         if (task.done) acc[task.tag].done++;
         return acc;
       },
-      {} as Record<string, { done: number; total: number }>,
+      {} as Record<TaskTag, { done: number; total: number }>,
     );
 
   const donutData = Object.entries(categoryStats).map(([tag, s]) => ({
     name: tag,
     value: s.total,
-    color: CATEGORY_COLORS[tag] ?? 'var(--text-dim)',
+    color: CATEGORY_COLORS[tag as TaskTag] ?? 'var(--text-dim)',
   }));
 
   return (
@@ -79,7 +72,7 @@ export function TasksByCategory({ weeks, completedTasks, totalTasks }: Props) {
         <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-2 w-full">
           {Object.entries(categoryStats).map(([tag, s]) => {
             const pct = s.total > 0 ? Math.round((s.done / s.total) * 100) : 0;
-            const color = CATEGORY_COLORS[tag] ?? 'var(--text-dim)';
+            const color = CATEGORY_COLORS[tag as TaskTag] ?? 'var(--text-dim)';
             return (
               <div
                 key={tag}
@@ -90,7 +83,9 @@ export function TasksByCategory({ weeks, completedTasks, totalTasks }: Props) {
                     className="rounded-full h-2 w-2 shrink-0"
                     style={{ background: color }}
                   />
-                  <span className="text-sm">{formatTag(tag)}</span>
+                  <span className="text-sm">
+                    {TASK_TAG_LABELS[tag as TaskTag]}
+                  </span>
                 </div>
                 <div className="flex items-center gap-2 text-xs font-mono">
                   <span className="text-dim">

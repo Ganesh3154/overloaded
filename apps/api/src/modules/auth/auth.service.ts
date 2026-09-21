@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../user/user.service';
-import { LoginCredentialDto, RegisterCredentialDto } from './dto/auth.dto';
+import type { LoginInput, RegisterInput } from '@overloaded/shared';
 import { CreateUserDto } from '../user/dto/user.dto';
 import { hashPassword, verifyPassword } from 'src/helpers/crypto';
 import { JwtService } from '@nestjs/jwt';
@@ -14,7 +14,7 @@ export class AuthService {
     private userService: UserService,
   ) {}
 
-  async register(credential: RegisterCredentialDto) {
+  async register(credential: RegisterInput) {
     const hashedPassword = await hashPassword(credential.password);
 
     const user: CreateUserDto = {
@@ -30,7 +30,7 @@ export class AuthService {
     return data;
   }
 
-  async login(credential: LoginCredentialDto) {
+  async login(credential: LoginInput) {
     const user = await this.userService.find({ email: credential.email }, true);
     if (!user || !(await verifyPassword(credential.password, user.password))) {
       throw new UnauthorizedException('Invalid username or password');

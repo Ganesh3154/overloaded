@@ -15,13 +15,8 @@ import { HugeiconsIcon } from '@hugeicons/react';
 import { useState } from 'react';
 import Button from './button';
 import { LoginFormData, LoginFormInput } from '../types/form';
-import z from 'zod';
+import { loginSchema } from '@overloaded/shared';
 import { validate } from '../validator/resolver';
-
-const loginSchema = z.object({
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(8, 'Password must be at least 8 characters'),
-});
 
 const INPUTS: LoginFormInput[] = [
   {

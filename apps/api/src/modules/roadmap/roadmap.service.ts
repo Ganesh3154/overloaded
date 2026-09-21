@@ -1,5 +1,6 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { User } from '@prisma/client';
+import type { TaskStatus } from '@overloaded/shared';
 import { DatabaseService } from 'src/database/database.service';
 import { LLM_SERVICE } from 'src/llm/anthropic-llm.service';
 import type { LlmService } from 'src/llm/llm.interface';
@@ -57,11 +58,7 @@ export class RoadmapService {
     });
   }
 
-  async updateTaskStatus(
-    taskId: number,
-    status: 'TODO' | 'COMPLETED',
-    userId: number,
-  ) {
+  async updateTaskStatus(taskId: number, status: TaskStatus, userId: number) {
     this.logger.info(`Task id ${taskId} status ${status} userId ${userId}`);
     const task = await this.db.roadmapTask.findFirst({
       where: {

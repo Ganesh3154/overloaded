@@ -14,13 +14,13 @@ import {
   tagStyles,
   type RoadmapWeek,
   type StatusFilter,
-  type TagVariant,
 } from '../types/roadmap';
+import { TASK_TAG_LABELS, type TaskTag } from '@overloaded/shared';
 
 interface AccordionProps {
   week: RoadmapWeek;
   statusFilter: StatusFilter;
-  selectedTags: Set<TagVariant>;
+  selectedTags: Set<TaskTag>;
   onToggle: (taskId: number, done: boolean) => void;
 }
 
@@ -161,7 +161,7 @@ export default function Accordion({
                         <span
                           className={`text-[10px] font-bold px-2 py-0.5 rounded-full tracking-wider uppercase ${tagStyles[task.tag]}`}
                         >
-                          {task.tag}
+                          {TASK_TAG_LABELS[task.tag]}
                         </span>
                         <span className="flex items-center gap-1 text-dim text-[11px]">
                           <HugeiconsIcon
