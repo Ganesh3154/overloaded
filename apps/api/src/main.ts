@@ -26,8 +26,9 @@ async function bootstrap() {
     new LoggingInterceptor(logger),
     new TransformInterceptor(),
   );
+  app.useGlobalFilters(new GlobalExceptionFilter(logger));
 
   app.setGlobalPrefix('/api/v1');
   await app.listen(process.env.PORT ?? 3001);
 }
-bootstrap();
+void bootstrap();

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UserProfile } from '../services/user.service';
 
 interface Props {
@@ -65,7 +65,7 @@ export function RoadmapGenerator({
   const [visibleCount, setVisibleCount] = useState(0);
   const [typedText, setTypedText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const prevGenerating = useRef(false);
+  const [prevIsGenerating, setPrevIsGenerating] = useState(false);
   const steps = buildSteps(profile);
 
   function startTyping() {
@@ -96,12 +96,15 @@ export function RoadmapGenerator({
     setTimeout(() => startTyping(), 0);
   }
 
-  useEffect(() => {
-    if (isGenerating && !prevGenerating.current) {
+  // Adjust phase state in response to the isGenerating/isError transition,
+  // computed during render (per https://react.dev/learn/you-might-not-need-an-effect)
+  // instead of in an effect, since it only needs to react to a prop change.
+  if (isGenerating !== prevIsGenerating) {
+    setPrevIsGenerating(isGenerating);
+    if (isGenerating) {
       setPhase('generating');
       setVisibleCount(0);
-    }
-    if (!isGenerating && prevGenerating.current && phase === 'generating') {
+    } else if (phase === 'generating') {
       if (isError) {
         setPhase('error');
       } else {
@@ -109,8 +112,7 @@ export function RoadmapGenerator({
         setPhase('done');
       }
     }
-    prevGenerating.current = isGenerating;
-  }, [isGenerating, isError]);
+  }
 
   useEffect(() => {
     if (phase !== 'generating') return;
@@ -124,12 +126,15 @@ export function RoadmapGenerator({
       });
     }, 450);
     return () => clearInterval(timer);
-  }, [phase]);
+  }, [phase, steps.length]);
 
   useEffect(() => {
     if (!autoStart) return;
     const t = setTimeout(() => startTyping(), 400);
     return () => clearTimeout(t);
+    // startTyping is recreated every render; only autoStart should
+    // (re)trigger this, and only once on mount.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const isActive = phase === 'generating' && visibleCount < steps.length;
@@ -139,7 +144,7 @@ export function RoadmapGenerator({
     <div className="flex flex-col items-center justify-center flex-1 px-4 gap-8">
       <div className="flex flex-col items-center gap-3 text-center animate-fade-in">
         <span className="text-xs font-mono font-medium text-lime-cs uppercase tracking-widest">
-          // AI_ROADMAP_GENERATION
+          {'// AI_ROADMAP_GENERATION'}
         </span>
         <h2 className="text-3xl font-bold">
           Build your{' '}

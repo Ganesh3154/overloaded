@@ -6,7 +6,8 @@ import { SettingsPanel } from './settings-panel';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { Settings01Icon } from '@hugeicons/core-free-icons';
 import { usePathname } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useIsLoggedIn } from '../hooks/use-is-logged-in';
 
 const NAV_LINKS = [
   { href: '/', label: 'Home' },
@@ -18,12 +19,7 @@ const NAV_LINKS = [
 export default function Header() {
   const pathname = usePathname();
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    setIsLoggedIn(!!localStorage.getItem('access_token'));
-    console.log(isLoggedIn);
-  }, [pathname]);
+  const isLoggedIn = useIsLoggedIn();
 
   return (
     <>

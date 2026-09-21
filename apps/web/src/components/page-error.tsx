@@ -13,7 +13,7 @@ export function PageError({
     <div className="flex flex-col items-center justify-center flex-1 px-4 gap-8">
       <div className="flex flex-col items-center gap-3 text-center animate-fade-in">
         <span className="text-xs font-mono font-medium text-lime-cs uppercase tracking-widest">
-          // API_ERROR
+          {'// API_ERROR'}
         </span>
         <h2 className="text-3xl font-bold">
           Failed to{' '}

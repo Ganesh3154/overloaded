@@ -15,9 +15,22 @@ import { LoggerService } from 'src/logger/logger.service';
 export const IS_PUBLIC_KEY = 'isPublic';
 export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
 
+export interface JwtPayload {
+  sub: string;
+  uid: string;
+  username: string | null;
+  email: string;
+  id: number;
+  aud?: string;
+}
+
+interface AuthenticatedRequest extends Request {
+  user?: JwtPayload;
+}
+
 export const User = createParamDecorator(
-  (data: string, ctx: ExecutionContext) => {
-    const request = ctx.switchToHttp().getRequest();
+  (data: keyof JwtPayload | undefined, ctx: ExecutionContext) => {
+    const request = ctx.switchToHttp().getRequest<AuthenticatedRequest>();
     const user = request.user;
 
     return data ? user?.[data] : user;
@@ -41,11 +54,11 @@ export class AuthGuard implements CanActivate {
     ]);
     if (isPublic) return true;
 
-    const request = context.switchToHttp().getRequest<Request>();
+    const request = context.switchToHttp().getRequest<AuthenticatedRequest>();
     return this.validateReqeust(request);
   }
 
-  validateReqeust(request: Request) {
+  validateReqeust(request: AuthenticatedRequest) {
     const accessToken = (request.headers['authorization'] as string)?.split(
       'Bearer ',
     )[1];
@@ -55,11 +68,11 @@ export class AuthGuard implements CanActivate {
     }
 
     try {
-      const payload = this.jwtService.verify(accessToken);
-      if (payload['aud'] !== process.env.JWT_AUD)
+      const payload = this.jwtService.verify<JwtPayload>(accessToken);
+      if (payload.aud !== process.env.JWT_AUD)
         throw new UnauthorizedException('Invalid access token');
 
-      request['user'] = payload;
+      request.user = payload;
     } catch (error) {
       throw new UnauthorizedException(error);
     }

@@ -3,12 +3,18 @@ import * as winston from 'winston';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
+function toLogString(value: unknown): string {
+  if (typeof value === 'string') return value;
+  if (typeof value === 'object' && value !== null) return JSON.stringify(value);
+  return String(value);
+}
+
 const devFormat = winston.format.combine(
   winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
   winston.format.colorize(),
   winston.format.printf(({ timestamp, level, message, stack }) => {
-    const trace = stack ? `\n${stack}` : '';
-    return `${timestamp} ${level} ${message}${trace}`;
+    const trace = stack ? `\n${toLogString(stack)}` : '';
+    return `${toLogString(timestamp)} ${level} ${toLogString(message)}${trace}`;
   }),
 );
 
@@ -29,39 +35,38 @@ export class LoggerService implements NestLoggerService {
     });
   }
 
-  private fmt(message: any, optionalParams: any[]): string {
-    const serialized =
-      typeof message === 'object' ? JSON.stringify(message) : message;
+  private fmt(message: unknown, optionalParams: unknown[]): string {
+    const serialized = toLogString(message);
     const context = optionalParams[0];
-    return context ? `[${context}] ${serialized}` : serialized;
+    return context ? `[${toLogString(context)}] ${serialized}` : serialized;
   }
 
-  log(message: any, ...optionalParams: any[]) {
+  log(message: unknown, ...optionalParams: unknown[]) {
     this.logger.info(this.fmt(message, optionalParams));
   }
 
-  info(message: any, ...optionalParams: any[]) {
+  info(message: unknown, ...optionalParams: unknown[]) {
     this.logger.info(this.fmt(message, optionalParams));
   }
 
-  error(message: any, ...optionalParams: any[]) {
+  error(message: unknown, ...optionalParams: unknown[]) {
     const [stack, context] = optionalParams;
     this.logger.error(this.fmt(message, [context]), { stack });
   }
 
-  warn(message: any, ...optionalParams: any[]) {
+  warn(message: unknown, ...optionalParams: unknown[]) {
     this.logger.warn(this.fmt(message, optionalParams));
   }
 
-  debug(message: any, ...optionalParams: any[]) {
+  debug(message: unknown, ...optionalParams: unknown[]) {
     this.logger.debug(this.fmt(message, optionalParams));
   }
 
-  verbose(message: any, ...optionalParams: any[]) {
+  verbose(message: unknown, ...optionalParams: unknown[]) {
     this.logger.verbose(this.fmt(message, optionalParams));
   }
 
-  fatal(message: any, ...optionalParams: any[]) {
+  fatal(message: unknown, ...optionalParams: unknown[]) {
     this.logger.error(this.fmt(message, optionalParams));
   }
 }

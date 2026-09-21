@@ -39,7 +39,7 @@ export function SettingsPanel({ open, onClose }: SettingsPanelProps) {
         <div className="flex items-center justify-between px-5 py-4 border-b border-border/40">
           <div>
             <span className="text-[10px] font-mono font-medium text-lime-cs uppercase tracking-widest">
-              // Settings
+              {'// Settings'}
             </span>
             <p className="font-bold text-sm mt-0.5">Preferences</p>
           </div>

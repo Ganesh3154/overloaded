@@ -18,7 +18,7 @@ export class AnthropicLlmService implements LlmService {
     });
   }
   async generateRoadmap(user: User): Promise<RoadmapResponse> {
-    this.logger.info(`Generating roadmap for ${user}`);
+    this.logger.info(`Generating roadmap for user ${user.id}`);
     const prompt =
       `Generate a roadmap for this candidate:\n\n${JSON.stringify(user, null, 2)}`.trim();
 
@@ -44,9 +44,11 @@ export class AnthropicLlmService implements LlmService {
         'Unexpected response type from LLM',
       );
 
-    const roadmapResponse = JSON.parse(block.text);
-    this.logger.info(`Generated roadmap ${roadmapResponse}`);
+    const roadmapResponse = JSON.parse(block.text) as RoadmapResponse;
+    this.logger.info(
+      `Generated ${roadmapResponse.totalWeeks}-week roadmap for user ${user.id}`,
+    );
 
-    return JSON.parse(block.text);
+    return roadmapResponse;
   }
 }

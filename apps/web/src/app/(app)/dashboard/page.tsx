@@ -84,7 +84,7 @@ export default function DashboardPage() {
       <div className="flex flex-col items-center justify-center flex-1 px-4 gap-8">
         <div className="flex flex-col items-center gap-3 text-center animate-fade-in">
           <span className="text-xs font-mono font-medium text-lime-cs uppercase tracking-widest">
-            // NO_ACTIVE_ROADMAP
+            {'// NO_ACTIVE_ROADMAP'}
           </span>
           <h2 className="text-3xl font-bold">
             Nothing to{' '}
@@ -180,7 +180,8 @@ export default function DashboardPage() {
   return (
     <div className="flex-1 min-h-0 overflow-y-auto lg:overflow-hidden flex flex-col gap-3 max-w-6xl w-full px-4 sm:px-6 py-4 mx-auto">
       <span className="text-xs font-mono font-medium text-lime-cs uppercase">
-        // Hello, {profile?.username}
+        {'// Hello, '}
+        {profile?.username}
       </span>
       <h2 className="text-4xl font-bold">
         Your{' '}
@@ -259,7 +260,7 @@ export default function DashboardPage() {
 
       <div className="flex flex-col gap-3 lg:flex-1 lg:min-h-0">
         <span className="text-xs font-mono font-medium text-lime-cs uppercase">
-          // Analytics
+          {'// Analytics'}
         </span>
         <div className="flex justify-between items-center">
           <h3 className="text-xl font-bold">Progress at a glance</h3>

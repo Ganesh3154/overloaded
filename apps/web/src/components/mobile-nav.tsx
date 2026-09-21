@@ -10,7 +10,7 @@ import {
   Login01Icon,
 } from '@hugeicons/core-free-icons';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useIsLoggedIn } from '../hooks/use-is-logged-in';
 
 const NAV_LINKS = [
   { href: '/', label: 'Home', icon: Home01Icon },
@@ -21,11 +21,7 @@ const NAV_LINKS = [
 
 export default function MobileNav() {
   const pathname = usePathname();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    setIsLoggedIn(!!localStorage.getItem('access_token'));
-  }, [pathname]);
+  const isLoggedIn = useIsLoggedIn();
 
   return (
     <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 h-16 border-t border-border/60 bg-background/90 backdrop-blur-xl">

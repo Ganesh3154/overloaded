@@ -18,7 +18,7 @@ export default function Error({
     <div className="flex flex-col items-center justify-center flex-1 px-4 py-12 gap-10">
       <div className="flex flex-col items-center gap-4 text-center animate-fade-in">
         <span className="text-xs font-mono font-medium text-lime-cs uppercase tracking-widest">
-          // RUNTIME_EXCEPTION
+          {'// RUNTIME_EXCEPTION'}
         </span>
         <h1 className="text-5xl sm:text-7xl font-bold tracking-tighter leading-none">
           Something{' '}

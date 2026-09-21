@@ -24,7 +24,7 @@ export class AuthService {
     };
 
     const createdUser = await this.userService.createUser(user);
-    this.logger.info(`User registered ${createdUser}`);
+    this.logger.info(`User registered ${createdUser.id}`);
 
     const data = await this.login(credential);
     return data;
@@ -44,7 +44,7 @@ export class AuthService {
     });
 
     const data = { ...user, accessToken };
-    this.logger.info(`User logged in ${data}`);
+    this.logger.info(`User logged in ${data.id}`);
 
     return data;
   }
