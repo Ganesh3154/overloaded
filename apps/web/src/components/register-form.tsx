@@ -15,6 +15,8 @@ import { useForm } from 'react-hook-form';
 import Input from './input';
 import Link from 'next/link';
 import Button from './button';
+import Divider from './divider';
+import GoogleButton from './google-button';
 import { registerSchema } from '@overloaded/shared';
 import { validate } from '../validator/resolver';
 import { RegisterFormData, RegisterFormInput } from '../types/form';
@@ -127,6 +129,8 @@ export default function RegisterForm({ onSubmit, isPending }: Props) {
             </>
           )}
         </Button>
+        <Divider label="or" />
+        <GoogleButton />
       </div>
       <p className="mt-5 text-center text-sm text-dim">
         Already have an account?{' '}

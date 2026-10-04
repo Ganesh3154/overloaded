@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import type { OnboardingInput } from '@overloaded/shared';
 import { DatabaseService } from '../../database/database.service';
-import { CreateUserDto } from 'src/modules/user/dto/user.dto';
+import {
+  CreateGoogleUserDto,
+  CreateUserDto,
+} from 'src/modules/user/dto/user.dto';
 import { LoggerService } from 'src/logger/logger.service';
 
 @Injectable()
@@ -39,6 +42,54 @@ export class UserService {
         fullName: query.fullName,
       },
       omit: { password: !includePassword },
+      include: {
+        targetCompanies: {
+          include: {
+            company: true,
+          },
+        },
+      },
+    });
+  }
+
+  async findByGoogleId(googleId: string) {
+    return await this.db.user.findUnique({
+      where: { googleId },
+      omit: { password: true },
+      include: {
+        targetCompanies: {
+          include: {
+            company: true,
+          },
+        },
+      },
+    });
+  }
+
+  async createGoogleUser(user: CreateGoogleUserDto) {
+    return await this.db.user.create({
+      data: {
+        fullName: user.fullName,
+        email: user.email,
+        googleId: user.googleId,
+        isDeleted: false,
+      },
+      omit: { password: true },
+      include: {
+        targetCompanies: {
+          include: {
+            company: true,
+          },
+        },
+      },
+    });
+  }
+
+  async linkGoogleAccount(uid: string, googleId: string) {
+    return await this.db.user.update({
+      where: { uid },
+      data: { googleId },
+      omit: { password: true },
       include: {
         targetCompanies: {
           include: {

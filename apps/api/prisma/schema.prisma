@@ -36,7 +36,8 @@ model User {
     username             String?             @db.VarChar(100)
     fullName             String              @db.VarChar(150)
     email                String              @unique() @db.VarChar(255)
-    password             String              @db.VarChar(255)
+    password             String?             @db.VarChar(255)
+    googleId             String?             @unique() @db.VarChar(255)
     yearsOfExperience    Int?                @db.SmallInt
     learningStyle        String[]
     techStack            String[]

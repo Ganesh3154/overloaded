@@ -14,6 +14,8 @@ import Link from 'next/link';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { useState } from 'react';
 import Button from './button';
+import Divider from './divider';
+import GoogleButton from './google-button';
 import { LoginFormData, LoginFormInput } from '../types/form';
 import { loginSchema } from '@overloaded/shared';
 import { validate } from '../validator/resolver';
@@ -123,6 +125,8 @@ export default function LoginForm({ onSubmit, isPending }: Props) {
               </>
             )}
           </Button>
+          <Divider label="or" />
+          <GoogleButton />
         </div>
         <p className="text-center text-sm text-muted-foreground text-dim">
           Don&apos;t have an account?{' '}
