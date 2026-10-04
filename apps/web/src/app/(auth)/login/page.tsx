@@ -7,11 +7,12 @@ import { LoginFormData } from '@/src/types/form';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-const GOOGLE_ERROR_MESSAGES: Record<string, string> = {
+const LOGIN_ERROR_MESSAGES: Record<string, string> = {
   google_oauth_denied: 'Google sign-in was cancelled.',
   google_oauth_invalid_state:
     'Google sign-in could not be verified. Please try again.',
   google_oauth_failed: 'Google sign-in failed. Please try again.',
+  session_expired: 'Your session has expired. Please sign in again.',
 };
 
 export default function LoginPage() {
@@ -25,7 +26,7 @@ export default function LoginPage() {
 function LoginPageWithSearchParams() {
   const searchParams = useSearchParams();
   const errorCode = searchParams.get('error');
-  const error = errorCode ? (GOOGLE_ERROR_MESSAGES[errorCode] ?? null) : null;
+  const error = errorCode ? (LOGIN_ERROR_MESSAGES[errorCode] ?? null) : null;
 
   return <LoginPageContent error={error} />;
 }
