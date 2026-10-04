@@ -50,6 +50,9 @@ model User {
     hrsPerDay            Int?                @db.SmallInt
     isOnboarded          Boolean             @default(false) @db.Boolean
     isDeleted            Boolean             @db.Boolean
+    currentStreak        Int                 @default(0) @db.SmallInt
+    longestStreak        Int                 @default(0) @db.SmallInt
+    lastActiveDate       DateTime?           @db.Date
     roadmaps             Roadmap[]
 
     @@map("users")

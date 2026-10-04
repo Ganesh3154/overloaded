@@ -17,6 +17,9 @@ export interface UserProfile {
   hrsPerDay: number;
   isOnboarded: boolean;
   isDeleted: boolean;
+  currentStreak: number;
+  longestStreak: number;
+  lastActiveDate: string | null;
   targetCompanies: {
     id: number;
     userId: number;
