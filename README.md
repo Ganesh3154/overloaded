@@ -9,6 +9,18 @@ A personalized, gamified technical interview-prep platform. Tell it your tech st
 
 A short onboarding flow captures a candidate's profile: years of experience, tech stack, target companies, self-rated skill levels (DSA / system design / behavioral), the skills they want to pick up, and how many weeks and hours per day they can dedicate. That profile is sent to an LLM (Anthropic Claude), constrained to a structured JSON schema, which returns a full multi-week plan. The plan is persisted as a graph of weeks and tasks, and the user works through it from a dashboard, checking off tasks, earning XP, and watching a readiness score move.
 
+## Screenshots
+
+| Landing | Dashboard |
+|---|---|
+| ![Landing page](docs/screenshots/landing.png) | ![Dashboard](docs/screenshots/dashboard.png) |
+| **Roadmap** | **Profile** |
+| ![Roadmap](docs/screenshots/roadmap.png) | ![Profile](docs/screenshots/profile.png) |
+| **Onboarding** | **Login** |
+| ![Onboarding](docs/screenshots/onboarding.png) | ![Login](docs/screenshots/login.png) |
+| **Sign up** | |
+| ![Sign up](docs/screenshots/signup.png) | |
+
 ## Architecture
 
 This is a pnpm + Turborepo monorepo with two applications and one shared package:

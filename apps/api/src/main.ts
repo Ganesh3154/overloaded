@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { ValidationPipe } from '@nestjs/common';
+import cookieParser from 'cookie-parser';
 import { GlobalExceptionFilter } from './filters/global-exception.filter';
 import { LoggerService } from './logger/logger.service';
 import { TransformInterceptor } from './interceptors/transform.interceptor';
@@ -13,8 +14,10 @@ async function bootstrap() {
     logger,
   });
 
+  app.use(cookieParser());
   app.enableCors({
-    origin: '*',
+    origin: process.env.FRONTEND_URL ?? 'http://localhost:3000',
+    credentials: true,
     allowedHeaders: [
       'Content-Type',
       'Authorization',

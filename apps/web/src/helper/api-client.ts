@@ -24,6 +24,20 @@ export class ApiClientError extends Error {
   }
 }
 
+// A 401 on a request that carried a token means the session itself is
+// invalid (expired/revoked) rather than e.g. bad login credentials — those
+// go through /auth/login with no token attached at all, so they never hit
+// this path. Bounce the user back to login rather than leaving them staring
+// at a page full of failed queries.
+function handleExpiredSession() {
+  if (typeof window === 'undefined') return;
+  localStorage.removeItem('access_token');
+  localStorage.removeItem('is_onboarded');
+  if (window.location.pathname !== '/login') {
+    window.location.href = '/login?error=session_expired';
+  }
+}
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const clientToken =
     typeof window !== 'undefined' ? localStorage.getItem('access_token') : null;
@@ -39,6 +53,9 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   });
 
   if (!res.ok) {
+    if (res.status === 401 && clientToken) {
+      handleExpiredSession();
+    }
     const err = (await res.json()) as ApiError;
     throw new ApiClientError(err.statusCode, err.message, err.error);
   }

@@ -170,6 +170,15 @@ export default function DashboardPage() {
     .filter((t) => t.done)
     .reduce((sum, t) => sum + t.xp, 0);
 
+  const currentStreak = profile?.currentStreak ?? 0;
+  const longestStreak = profile?.longestStreak ?? 0;
+  const streakSubtitle =
+    currentStreak === 0
+      ? 'Complete a task to start your streak'
+      : currentStreak >= longestStreak
+        ? 'Personal best — keep it up!'
+        : `Best: ${longestStreak}d`;
+
   const companiesLabel = profile?.targetCompanies?.length
     ? profile.targetCompanies
         .slice(0, 2)
@@ -220,9 +229,10 @@ export default function DashboardPage() {
               />
             </div>
           }
-          value="0d"
-          subtitle="Keep going!"
-          progress={0}
+          value={`${currentStreak}d`}
+          subtitle={streakSubtitle}
+          progress={currentStreak}
+          max={Math.max(longestStreak, currentStreak, 1)}
         />
         <StatsCard
           index={2}

@@ -2,11 +2,15 @@
 
 import { useTheme } from '@/src/app/theme-provider';
 import {
+  Logout01Icon,
   Moon01Icon,
   PanelRightClose,
   Sun01Icon,
 } from '@hugeicons/core-free-icons';
 import { HugeiconsIcon } from '@hugeicons/react';
+import { useRouter } from 'next/navigation';
+import { useIsLoggedIn } from '../hooks/use-is-logged-in';
+import { logout } from '../services/auth.service';
 
 interface SettingsPanelProps {
   open: boolean;
@@ -15,6 +19,14 @@ interface SettingsPanelProps {
 
 export function SettingsPanel({ open, onClose }: SettingsPanelProps) {
   const { theme, setTheme } = useTheme();
+  const router = useRouter();
+  const isLoggedIn = useIsLoggedIn();
+
+  function handleLogout() {
+    logout();
+    onClose();
+    router.push('/login');
+  }
 
   return (
     <>
@@ -95,6 +107,26 @@ export function SettingsPanel({ open, onClose }: SettingsPanelProps) {
               </button>
             </div>
           </div>
+
+          {/* Account */}
+          {isLoggedIn && (
+            <div className="flex flex-col gap-3 pt-3 border-t border-border/40">
+              <span className="text-[10px] font-mono font-semibold text-dim uppercase tracking-widest">
+                Account
+              </span>
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 p-3 rounded-lg border border-destructive/30 text-destructive text-xs font-medium hover:bg-destructive/10 transition-all duration-150"
+              >
+                <HugeiconsIcon
+                  icon={Logout01Icon}
+                  size={16}
+                  color="currentColor"
+                />
+                <span>Log out</span>
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </>
