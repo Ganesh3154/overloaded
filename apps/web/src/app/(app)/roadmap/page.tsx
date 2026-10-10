@@ -67,13 +67,8 @@ export default function RoadmapPage() {
   });
 
   const { mutate: toggleTask } = useMutation({
-    mutationFn: ({
-      taskId,
-      status,
-    }: {
-      taskId: number;
-      status: TaskStatus;
-    }) => updateTaskStatus(taskId, status),
+    mutationFn: ({ taskId, status }: { taskId: number; status: TaskStatus }) =>
+      updateTaskStatus(taskId, status),
     onMutate: async ({ taskId, status }) => {
       await queryClient.cancelQueries({ queryKey: ['roadmap'] });
       const previous = queryClient.getQueryData<RoadmapData>(['roadmap']);
@@ -97,6 +92,9 @@ export default function RoadmapPage() {
       if (context?.previous) {
         queryClient.setQueryData(['roadmap'], context.previous);
       }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['profile'] });
     },
   });
 

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import type { Prisma, User } from '@prisma/client';
 import type { OnboardingInput } from '@overloaded/shared';
 import { DatabaseService } from '../../database/database.service';
 import {
@@ -6,6 +7,7 @@ import {
   CreateUserDto,
 } from 'src/modules/user/dto/user.dto';
 import { LoggerService } from 'src/logger/logger.service';
+import { computeStreakOnActivity } from 'src/helpers/streak';
 
 @Injectable()
 export class UserService {
@@ -97,6 +99,25 @@ export class UserService {
           },
         },
       },
+    });
+  }
+
+  async recordActivity(
+    userId: number,
+    now: Date,
+    tx: Prisma.TransactionClient = this.db,
+  ): Promise<User> {
+    const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
+
+    const next = computeStreakOnActivity(now, {
+      currentStreak: user.currentStreak,
+      longestStreak: user.longestStreak,
+      lastActiveDate: user.lastActiveDate,
+    });
+
+    return tx.user.update({
+      where: { id: userId },
+      data: next,
     });
   }
 

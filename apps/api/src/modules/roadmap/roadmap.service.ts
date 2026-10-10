@@ -6,6 +6,7 @@ import { LLM_SERVICE } from 'src/llm/anthropic-llm.service';
 import type { LlmService } from 'src/llm/llm.interface';
 import { roadmapTagToTaskTag } from 'src/llm/schemas';
 import { LoggerService } from 'src/logger/logger.service';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class RoadmapService {
@@ -13,6 +14,7 @@ export class RoadmapService {
     private logger: LoggerService,
     @Inject(LLM_SERVICE) private llm: LlmService,
     private db: DatabaseService,
+    private userService: UserService,
   ) {}
 
   async createRoadmap(user: User) {
@@ -60,20 +62,30 @@ export class RoadmapService {
 
   async updateTaskStatus(taskId: number, status: TaskStatus, userId: number) {
     this.logger.info(`Task id ${taskId} status ${status} userId ${userId}`);
-    const task = await this.db.roadmapTask.findFirst({
-      where: {
-        id: taskId,
-        roadmapWeek: { roadmap: { userId } },
-      },
-    });
 
-    if (!task) {
-      throw new NotFoundException(`Task ${taskId} not found`);
-    }
+    return this.db.$transaction(async (tx) => {
+      const task = await tx.roadmapTask.findFirst({
+        where: {
+          id: taskId,
+          roadmapWeek: { roadmap: { userId } },
+        },
+      });
 
-    return this.db.roadmapTask.update({
-      where: { id: taskId },
-      data: { status },
+      if (!task) {
+        throw new NotFoundException(`Task ${taskId} not found`);
+      }
+
+      const updated = await tx.roadmapTask.update({
+        where: { id: taskId },
+        data: { status },
+      });
+
+      const isNewCompletion = task.status === 'TODO' && status === 'COMPLETED';
+      if (isNewCompletion) {
+        await this.userService.recordActivity(userId, new Date(), tx);
+      }
+
+      return updated;
     });
   }
 }

@@ -117,6 +117,8 @@ export default function ProfilePage() {
     totalXp >= 100 && 'Century Club',
     totalXp >= 1000 && 'XP Master',
     tasksCompleted > 0 && tasksCompleted === totalTasks && 'Completionist',
+    profile.currentStreak >= 3 && 'On Fire',
+    profile.currentStreak >= 7 && 'Week Warrior',
   ].filter(Boolean) as string[];
 
   return (
