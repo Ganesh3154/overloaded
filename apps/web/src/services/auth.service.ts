@@ -26,6 +26,11 @@ function persistAuthResponse(response: AuthResponse) {
   return response;
 }
 
+export function logout() {
+  localStorage.removeItem('access_token');
+  localStorage.removeItem('is_onboarded');
+}
+
 export async function register(credential: RegisterCredentialDto) {
   const response = await apiClient.post<AuthResponse>(
     '/auth/register',
