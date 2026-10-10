@@ -1,8 +1,5 @@
 import { z } from 'zod';
 
-// Mirrors class-validator's IsStrongPassword defaults (min length 8, at least
-// one lowercase, uppercase, number and symbol) so client and server agree on
-// what a valid password is.
 const passwordSchema = z
   .string()
   .min(8, 'Password must be at least 8 characters')

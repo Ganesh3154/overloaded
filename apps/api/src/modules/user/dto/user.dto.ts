@@ -25,3 +25,17 @@ export class CreateUserDto {
 
   isDeleted?: boolean;
 }
+
+export class CreateGoogleUserDto {
+  @IsString()
+  @IsNotEmpty()
+  fullName!: string;
+
+  @IsEmail()
+  @IsNotEmpty()
+  email!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  googleId!: string;
+}

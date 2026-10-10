@@ -16,14 +16,22 @@ interface AuthResponse {
   isOnboarded: boolean;
 }
 
+interface GoogleAuthUrlResponse {
+  url: string;
+}
+
+function persistAuthResponse(response: AuthResponse) {
+  localStorage.setItem('access_token', response.accessToken);
+  localStorage.setItem('is_onboarded', String(response.isOnboarded));
+  return response;
+}
+
 export async function register(credential: RegisterCredentialDto) {
   const response = await apiClient.post<AuthResponse>(
     '/auth/register',
     credential,
   );
-  localStorage.setItem('access_token', response.accessToken);
-  localStorage.setItem('is_onboarded', String(response.isOnboarded));
-  return response;
+  return persistAuthResponse(response);
 }
 
 export async function login(credential: LoginCredentialDto) {
@@ -31,7 +39,26 @@ export async function login(credential: LoginCredentialDto) {
     '/auth/login',
     credential,
   );
-  localStorage.setItem('access_token', response.accessToken);
-  localStorage.setItem('is_onboarded', String(response.isOnboarded));
-  return response;
+  return persistAuthResponse(response);
+}
+
+export async function redirectToGoogleLogin() {
+  const { url } = await apiClient.get<GoogleAuthUrlResponse>(
+    '/auth/google/url',
+    { credentials: 'include' },
+  );
+  window.location.href = url;
+}
+
+export function completeGoogleLogin(hash: string): AuthResponse | null {
+  const params = new URLSearchParams(hash.replace(/^#/, ''));
+  const accessToken = params.get('accessToken');
+  const isOnboarded = params.get('isOnboarded');
+
+  if (!accessToken || isOnboarded === null) return null;
+
+  return persistAuthResponse({
+    accessToken,
+    isOnboarded: isOnboarded === 'true',
+  });
 }
